@@ -3,10 +3,11 @@ import Login from '../../Components/Login/Login'
 import { postLoginNumber } from '../../API/userAPI'
 import OTPVerification from '../../Components/Login/OTPForm';
 
+
 const OTPLoginLayout = () => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [numberValidation, setNumberValidation] = useState('');
-    
+
     const handleNumber = (e) => {
       const input = e.target.value;
     

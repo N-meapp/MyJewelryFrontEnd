@@ -29,7 +29,7 @@ const MainHeader = () => {
               {item.main_img.map((img, index) => (
                 <img
                   key={`main-${index}`}
-                  className="w-[465px] h-[476px] object-cover rounded-[30px] md:hidden"
+                  className="w-[465px] h-[47vh] object-cover rounded-[30px] md:hidden"
                   src={img}
                   alt={`main-${index}`}
                 />

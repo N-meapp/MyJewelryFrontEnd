@@ -1,29 +1,40 @@
 import React, { useState } from 'react'
 import Login from '../../Components/Login/Login'
 import { postLoginNumber } from '../../API/userAPI'
+import { useNavigate } from "react-router-dom";
 
 const LoginLayout = () => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [numberValidation, setNumberValidation] = useState('');
+    const navigate = useNavigate();
+    // const handleNumber = (e) => {
+    //   const input = e.target.value;
     
-    const handleNumber = (e) => {
-      const input = e.target.value;
+    //   if (phoneNumber.length > 0) {
+    //     // setPhoneNumber(input);
+    //     setNumberValidation('');
+    //   } else {
+    //     setNumberValidation('Phone number must be 14 digits');
+    //   }
+    // };
     
-      if (/^\d{0,14}$/.test(input)) {
-        setPhoneNumber(input);
-        setNumberValidation('');
-      } else {
-        setNumberValidation('Phone number must be 14 digits');
-      }
-    };
-    
-    const submitLogin = () => {
-      if (phoneNumber.length === 14 && numberValidation === '') {
-        postLoginNumber({ phoneNumber });
-      } else {
-        setNumberValidation('Phone number must be 14 digits');
-      }
-    };
+   const submitLogin = () => {
+  if (phoneNumber.length === 13) {
+    postLoginNumber({ phoneNumber })
+      .then((res) => {
+        console.log(res, "✅ OTP response received");
+          if(res.message === "OTP sent successfully."){
+           navigate(`/OTPLogin`, {state:{number:phoneNumber}})
+          }
+      })
+      .catch((err) => {
+        console.error("Error in OTP request:", err);
+      });
+  } else {
+    setNumberValidation('Phone number must be 14 digits');
+  }
+};
+
     
 
     return (
@@ -71,7 +82,7 @@ const LoginLayout = () => {
                                 type="text"  // Use "text" to control input format via regex
                                 placeholder="+91 Enter number to login"
                                 value={phoneNumber}
-                                onChange={handleNumber}
+                                onChange={(e)=>setPhoneNumber(e.target.value)}
                             />
 
                             {numberValidation && (

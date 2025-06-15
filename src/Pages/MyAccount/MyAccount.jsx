@@ -7,6 +7,9 @@ import DetailsNavbar from "../../Layout/ProductDetail/DetailsNavbar";
 import PersonalDetails from "../../Layout/MyAccount/PersonalDetails";
 import { AccountMobileView } from "../../Layout/Navbar/subMobileNav";
 import { useLocation } from "react-router-dom";
+import Modal from "../../Components/Modal/Modal";
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import { useDispatch, useSelector } from "react-redux";
 
 const MyAccount = () => {
     const [activeTab, setActiveTab] = useState('overview');
@@ -14,12 +17,24 @@ const MyAccount = () => {
     const location = useLocation();
     const [searchTerm, setSearchTerm] = useState('')
     const [searchResult, setSearchResult] = useState([])
+    const [isModalOpen, setModalOpen] = useState(false);
 
     useEffect(() => {
         if (location.state?.message) {
             setActiveTab(location.state.message);
         }
     }, [location.state?.message]); // Run only when message changes
+
+    const handleLogout = () => {
+        dispatch({ type: "LOGOUT" }); // Clears both user and admin
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        console.log("Logged out successfully!");
+        navigate('/login')
+        // showToast("error", "Logout Successfully!");
+
+    };
+      const dispatch = useDispatch();
 
     const renderContent = () => {
         switch (activeTab) {
@@ -29,14 +44,13 @@ const MyAccount = () => {
                 return <div><PersonalDetails /></div>;
             case 'whishlist':
                 return <div><Wishlist /></div>;
-
             default:
                 return <div>Select a menu item to see the content.</div>;
         }
     };
 
     return (
-        <> <div className="md:block hidden"> <Navbar searchTerm={searchTerm}   setSearchTerm={setSearchTerm} setSearchResult={setSearchResult}/></div>
+        <> <div className="md:block hidden"> <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} setSearchResult={setSearchResult} /></div>
             <AccountMobileView />
 
             <div className="md:px-[100px] md:py-[70px]">
@@ -94,6 +108,17 @@ const MyAccount = () => {
                                     ></div>
                                 </li>
 
+                                <li
+                                    onClick={() => setModalOpen(true)}
+                                    className={`flex items-center flex-col justify-center cursor-pointer text-[#474141] gap-4 md:hover:bg-[#b2503e] md:hover:text-[#ffffff] transition ease-in-out duration-300 p-2 rounded-xl poppins relative group `}
+                                >
+                                    <span className={isSidebarOpen ? "block" : "hidden"}>Logout</span>
+                                    <div
+                                        className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#6B3535] transform transition-transform duration-300 ease-in-out md:hidden ${activeTab === "whishlist" ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                                            }`}
+                                    ></div>
+                                </li>
+
 
                             </ul>
 
@@ -109,6 +134,29 @@ const MyAccount = () => {
                 </div>
             </div>
             <Footer />
+
+
+
+
+            <Modal
+                isOpen={isModalOpen}
+                modalWrapDiv={"fixed top-0 right-0 left-0 bg-[#cececeb3] z-50 flex justify-center items-center w-full h-[calc(100%-1rem)] max-h-full overflow-y-auto overflow-x-hidden"}
+                mainModalClass={"relative p-4 w-full max-w-lg max-h-full"}
+                onClose={() =>
+                    setModalOpen(false)}
+                content={(
+                    <div>
+                        <DotLottieReact
+                            src="https://lottie.host/acfead59-bb16-410a-bad0-f165dcbd36ba/RigCdOtdNq.lottie"
+                            autoplay
+                        />
+                        <div className="flex gap-2 justify-center items-center mt-5">
+                            <button onClick={()=>setModalOpen(false)} type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-7 py-3 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Cancel</button>
+                            <button onClick={handleLogout} type="button" class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-7 py-3 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Logout</button>
+                        </div>
+                    </div>
+                )}
+            />
         </>
     );
 };

@@ -18,7 +18,7 @@ const Home = () => {
     const [searchResult,setSearchResult]=useState([])
   return (
     <>
-      <Navbar mobailView={<MainMobileNav/>} searchTerm={searchTerm}   setSearchTerm={setSearchTerm} setSearchResult={setSearchResult}/>
+      <Navbar mobailView={<MainMobileNav searchTerm={searchTerm}   setSearchTerm={setSearchTerm} setSearchResult={setSearchResult} />} searchTerm={searchTerm}   setSearchTerm={setSearchTerm} setSearchResult={setSearchResult}/>
       <MainHeader />
       <HomeExplore />
       <TopCategories/>

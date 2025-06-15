@@ -27,7 +27,8 @@
 }
 
 .bolkit {
-  font-family: bolkit;
+  /* font-family: bolkit; */
+  font-family: "Alice", serif;
 }
 
 body {

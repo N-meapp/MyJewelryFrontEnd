@@ -5,7 +5,6 @@ import { fetchProductsDetails } from '../../API/userAPI.js';
 import { useLocation } from 'react-router-dom';
 
 
-
 const DetailHeader = () => {
     const location = useLocation()
     const id = location?.state?.id
@@ -16,6 +15,7 @@ const DetailHeader = () => {
 
     const [isModalTryitOnOpen, setModalTryitOnOpen] = useState(false);
     const [productData, setProductData] = useState([])
+
 
 
     useEffect(() => {
@@ -73,7 +73,18 @@ const DetailHeader = () => {
                     <div className='grid grid-cols-12 gap-1  '>
                         <div className='col-span-12 md:col-span-4'>
                             <div className='border-2 border-[#ccc4b8] rounded-[20px] relative  flex justify-center'>
-                                <img className='md:w-full md:h-[330px]   w-[358px] h-[325px]  object-cover rounded-[20px] ' src={productData.images? productData.images[currentIndex] : ''} />
+                                <div className=" absolute right-5 top-3 cursor-pointer">
+                                    {productData.is_wishlisted ?
+                                        <svg onClick={(e) => { e.stopPropagation(); setWishlist(false); }} className="rounded-full p-[2px] shadow-md z-50 transition-transform duration-300 ease-in-out hover:scale-125 " xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
+                                            <path fill="#7b5725" d="M2 9.137C2 14 6.02 16.591 8.962 18.911C10 19.729 11 20.5 12 20.5s2-.77 3.038-1.59C17.981 16.592 22 14 22 9.138S16.5.825 12 5.501C7.5.825 2 4.274 2 9.137" />
+                                        </svg>
+                                        :
+                                        <svg onClick={(e) => { e.stopPropagation(); setWishlist(true); }} className=" rounded-full p-[2px] shadow-md transition-transform duration-300 ease-in-out hover:scale-125 " xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
+                                            <path className="shadow-md" fill="#7b5725" fill-rule="evenodd" d="M5.624 4.424C3.965 5.182 2.75 6.986 2.75 9.137c0 2.197.9 3.891 2.188 5.343c1.063 1.196 2.349 2.188 3.603 3.154q.448.345.885.688c.526.415.995.778 1.448 1.043s.816.385 1.126.385s.674-.12 1.126-.385c.453-.265.922-.628 1.448-1.043q.437-.344.885-.687c1.254-.968 2.54-1.959 3.603-3.155c1.289-1.452 2.188-3.146 2.188-5.343c0-2.15-1.215-3.955-2.874-4.713c-1.612-.737-3.778-.542-5.836 1.597a.75.75 0 0 1-1.08 0C9.402 3.882 7.236 3.687 5.624 4.424M12 4.46C9.688 2.39 7.099 2.1 5 3.059C2.786 4.074 1.25 6.426 1.25 9.138c0 2.665 1.11 4.699 2.567 6.339c1.166 1.313 2.593 2.412 3.854 3.382q.43.33.826.642c.513.404 1.063.834 1.62 1.16s1.193.59 1.883.59s1.326-.265 1.883-.59c.558-.326 1.107-.756 1.62-1.16q.396-.312.826-.642c1.26-.97 2.688-2.07 3.854-3.382c1.457-1.64 2.567-3.674 2.567-6.339c0-2.712-1.535-5.064-3.75-6.077c-2.099-.96-4.688-.67-7 1.399" clip-rule="evenodd" />
+                                        </svg>
+                                    }
+                                </div>
+                                <img className='md:w-full md:h-[330px]  w-[358px] h-[325px]  object-cover rounded-[20px] ' src={productData.images ? productData.images[currentIndex] : ''} />
                                 <div className="absolute bottom-2 right-2 z-50">
 
                                     <div className="relative md:w-[140px] md:h-[42px] w-[128px] h-[34px] ">
@@ -95,7 +106,6 @@ const DetailHeader = () => {
 
                                         {/* Try it on Button */}
                                         <button
-
                                             onClick={() => setModalTryitOnOpen(true)}
                                             className={`absolute inset-0 md:w-full md:h-full  w-[128px] h-[33px] bg-white border border-[#ccc4b8] text-[#56433d] text-[13px] font-[550] rounded-[10px] px-3 py-2 flex items-center justify-center hover:bg-gray-100 shadow transition-all duration-500 ease-in-out
 
@@ -135,7 +145,6 @@ const DetailHeader = () => {
                                     </div>
                                 </button> */}
                                 </div>
-
                                 {/* <button type="button" class="absolute text-[13px] font-[550] bottom-1 right-1 text-[#56433d] rounded-[10px] bg-white border border-[#ccc4b8] focus:outline-none hover:bg-gray-100 px-3 py-2 me-2 mb-2 ">
                                 <div className='flex gap-2'>
                                     <span>
@@ -174,18 +183,15 @@ const DetailHeader = () => {
                                     <p className='poppins md:font-[300] text-[#474141] md:text-[16px] text-[10px]'>weight: &nbsp; <span className='font-[600] md:text-[19px] text-[10px] poppins'>{productData.metal_weight} g</span> </p>
                                 </div>
 
-
-
                                 <div className='flex flex-wrap justify-between w-full md:mt-[100px] mt-[70px]'>
                                     <div>
                                         <div className='flex gap-2'>
                                             <p className='inter md:text-[32px] text-[22px] font-[600] text-[#474141]'>₹{productData.grand_total}</p>
                                             <span className='md:mt-3 mt-2 cursor-pointer'><svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 15 15"><path fill="none" stroke="#474141" stroke-linecap="square" d="m14 5l-6.5 7L1 5" stroke-width="1" /></svg></span>
                                         </div>
-
                                         <p className='inter md:text-[12px] text-[9px] text-[#a29f9f]'>Incl. taxes and charges </p>
                                     </div>
-                                    <div  >
+                                    <div>
                                         <button type="button" class="text-white flex  md:gap-2 gap-2  bg-[#56433D] hover:bg-[#795f57] poppins font-medium md:rounded-lg rounded-[10px] text-[14px]  md:px-24 px-[60px] py-2.5 md:py-2.5 md:me-2 mb-2">
                                             <img className='md:w-[20px] md:h-[20px] w-[15px] h-[15px] md:mt-0 mt-1' src='/public/assets/Images/ProductDetails/w1.png' />
                                             Enquire
@@ -196,7 +202,6 @@ const DetailHeader = () => {
                                     <p className='text-[#636060] text-[14px]'>About</p>
                                     <p className='text-[#474141B2] text-[14px] mt-2'> Shop these sparkling collection of Gold Plated Royal Floral Carved Ear Cuff by SUHANI PITTIE online at Aza Fashions.Perfect for life's most memorable moments or as a cherished everyday treasure, its design captures both classic charm and modern luxury.</p>
                                 </div> */}
-
                             </div>
 
                         </div>
@@ -310,7 +315,7 @@ const DetailHeader = () => {
                                             }`}
                                         onClick={() => setCurrentIndex(index)}
                                     />
-                                )):''}
+                                )) : ''}
                             </div>
                         </div>
                     </div>
