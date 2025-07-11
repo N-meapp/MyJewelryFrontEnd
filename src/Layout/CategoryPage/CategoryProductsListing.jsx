@@ -8,6 +8,9 @@ export default function CategoryProductsListing({ selectedCategory,searchTerm,se
     
     const [productData, setProductData] = useState([])
 
+    console.log(selectedCategory,searchTerm,searchResult , "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+    
+
     useEffect(() => {
         if (selectedCategory && !searchTerm ) {
             fetchProductsDataByGender(selectedCategory, setProductData);
@@ -22,7 +25,7 @@ export default function CategoryProductsListing({ selectedCategory,searchTerm,se
       const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
       const startIndex = (currentPage - 1) * itemsPerPage;
       const productsToDisplay = filteredProducts.slice(startIndex, startIndex + itemsPerPage);
-
+     
     return (
         <>
             <div className="h-full w-fit md:mt-[40px] mt-[15px] grid md:grid-cols-3 grid-cols-2 gap-[10px] mx-auto">

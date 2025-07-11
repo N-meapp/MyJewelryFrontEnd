@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import './filter.css'
 
-
 const Filter = () => {
 
      const [minValue, setMinValue] = useState(0);
@@ -19,10 +18,6 @@ const Filter = () => {
         ];
     
         const [filter, setFilter] = useState(true)
-
-        // console.log(filter, "yyyy");
-
-    
     
         const handleMinChange = (e) => {
             const value = parseInt(e.target.value);
@@ -59,29 +54,10 @@ const Filter = () => {
         <div>
 
             <div
-                className={`col-span-12 md:col-span-3 px-4 pt-1 border-r-2 border-[#e0dbdb] transform transition-all duration-500 ease-in-out ${filter ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'
+                className={`col-span-12 md:col-span-3 px-4 pt-1 border-[#e0dbdb] transform transition-all duration-500 ease-in-out ${filter ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'
                     }`}
             >
                 <div>
-                    {/* Back Button */}
-                    {/* <button
-                        onClick={() => setFilter((prev) => !prev)}
-                        type="button"
-                        className="bg-[#fafafa] border border-none focus:outline-none hover:bg-[#f6f6f6] font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 transition-all duration-300"
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 24 24">
-                            <path
-                                fill="none"
-                                stroke="#563a14"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="1"
-                                d="M21 12.013L3.211 12m6.777 7L3 12l6.988-7"
-                            />
-                        </svg>
-                    </button> */}
-
-                    {/* Categories */}
                     <div>
                         <div className="bg-[#f4f4f4] w-full p-3 flex justify-center items-center">
                             <p className="text-[#7d6a4f] text-[19px] font-[500] poppins">SHOP BY CATEGORIES</p>
@@ -96,10 +72,6 @@ const Filter = () => {
                             </div>
                         </div>
                     </div>
-
-                    {/* Add transition to all your inner filter panels similarly */}
-                    {/* PRICE, BRAND, MATERIAL, STONES, etc. can keep same content and just wrap inner sections in transition classes if needed */}
-                    {/* Price Filter */}
                     <div>
                         <div className="bg-[#f4f4f4] w-full py-3 px-11 flex justify-between items-center mt-8">
                             <p className="text-[#563a14] text-[15px] font-[500] poppins">PRICE</p>

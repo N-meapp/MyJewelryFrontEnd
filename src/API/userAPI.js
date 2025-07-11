@@ -40,10 +40,11 @@ export const fetchRelatedProductsData = async (setFetchRelatedProductsData) => {
 // Search Products
 export const getSearchProducts = async (value) => {
     try {
-        const result = await api.get(`${BASE_URL}products/search/?q=${value}`)
-        // console.log('resss',result);
+        const result = await api.get(`${BASE_URL}combined-suggestions/?query=${value}`)
+        console.log('vtvttvtvtvt', result.data);
 
         return result.data
+
     } catch (error) {
         console.log(error);
     }
@@ -190,7 +191,7 @@ export const otpVerification = async ({ number, OtpValue }) => {
             },
         });
         console.log(result, "ttttttttttttttttttttt");
-        
+
         if (result.data.user_id && result.data.username && result.data.access && result.data.refresh) {
             localStorage.setItem("accessToken", result.data.access);
             localStorage.setItem("refreshToken", result.data.refresh);
@@ -213,5 +214,120 @@ export const FetchWishlistData = async (setFetcheData) => {
         setFetcheData(result.data)
     } catch (error) {
         console.log(error);
+    }
+}
+
+export const addToWishlist = async ({ id }) => {
+    try {
+        const formData = new FormData();
+        formData.append('product_id', id);
+        const result = await api.post(`${BASE_URL}wishlist/`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+
+        // setFetchedData(result); // optional — if you're storing it in state
+
+        return result.data;
+    } catch (error) {
+        console.log("Error in postLoginNumber:", error);
+        throw error;
+    }
+};
+
+export const removeToWishlist = async ({ id }) => {
+    try {
+        const formData = new FormData();
+        formData.append('product_id', id);
+        const result = await api.delete(`${BASE_URL}wishlist/${id}/`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        // setFetchedData(result); // optional — if you're storing it in state
+
+        return result.data;
+    } catch (error) {
+        console.log("Error in postLoginNumber:", error);
+        throw error;
+    }
+};
+
+
+export const FetchProfileData = async (setFetcheData) => {
+    try {
+        const result = await api.get(`${BASE_URL}profile/`)
+        setFetcheData(result.data)
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+export const PostProfileImage = async ({ selectedFile }) => {
+    const formData = new FormData();
+    formData.append("image", selectedFile);
+
+    const response = await api.put(`${BASE_URL}profile/image/`, formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
+
+    console.log("Image uploaded successfully", response.data);
+    return response.data; // Optional: return response if needed
+};
+
+
+
+export const editProfileData = async (formData) => {
+  try {
+    const response = await api.put(`${BASE_URL}profile/`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+export const sentEnquery = async ({ id }) => {
+    try {
+        const formData = new FormData();
+        formData.append('quantity', id);
+        const result = await api.post(`${BASE_URL}enquiry/${id}/`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        return result.data;
+    } catch (error) {
+        console.log("Error in postLoginNumber:", error);
+        throw error;
+    }
+};
+
+export const handleGoogleLogin = async ({tokenResponse}) =>{
+    try {
+        const res = await api.post(`${BASE_URL}dj-rest-auth/google/`,  {
+            access_token: tokenResponse.access_token,
+        });
+
+        if(res.data.message && res.data.access && res.data.refresh){
+        localStorage.setItem('accessToken', res.data.access);
+        localStorage.setItem('refreshToken', res.data.refresh);
+        return res.data;
+
+        }else{
+            return false
+        }
+        
+    } catch (error) {
+        console.log(error, "Login filed");
+        
     }
 }

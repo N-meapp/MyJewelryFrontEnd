@@ -1,19 +1,55 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Modal from '../Modal/Modal';
 import { useSelector } from "react-redux";
+import { FetchProfileData, PostProfileImage } from '../../API/userAPI';
 
 const ProfileView = () => {
     const [isModalOpen, setModalOpen] = useState(false);
-
     const user = useSelector((state) => state.user.user);
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [profileData, setProfileData] = useState([])
+    const [preview, setPreview] = useState(null);
 
-    console.log(user, "useeeeeeeeeeeeee");
-    
+
+    useEffect(() => {
+        FetchProfileData(setProfileData)
+    }, [])
+
+    useEffect(() => {
+        if (!selectedFile) {
+            setPreview(null);
+            return;
+        }
+
+        const objectUrl = URL.createObjectURL(selectedFile);
+        setPreview(objectUrl);
+
+        return () => URL.revokeObjectURL(objectUrl); // cleanup
+    }, [selectedFile]);
+
+
+
+    const handleUpload = async () => {
+        if (!selectedFile) {
+            alert("Please select an image first.");
+            return;
+        }
+
+        try {
+            await PostProfileImage({ selectedFile });
+            setModalOpen(false); // ✅ Move this here
+            FetchProfileData(setProfileData)
+        } catch (error) {
+            console.error("Upload failed", error);
+        }
+    };
+
+
     return (
         <>
 
             <div className=' relative cursor-pointer'>
-                <img className='rounded-full w-[206px] h-[206px]' src='/public/assets/Images/MyAccount/profile.png' />
+                <img className='rounded-full object-cover w-[206px] h-[206px]' src={profileData.image_url} />
                 <span onClick={() => setModalOpen(true)} className='rounded-full w-[33px] h-[33px] bg-[#fff] shadow-md absolute right-[18px] bottom-3 flex justify-center items-center'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24"><path fill="#56433d" d="M18.58 2.944a2 2 0 0 0-2.828 0L14.107 4.59l5.303 5.303l1.645-1.644a2 2 0 0 0 0-2.829zm-.584 8.363l-5.303-5.303l-8.835 8.835l-1.076 6.38l6.38-1.077z" /></svg>
                 </span>
@@ -26,8 +62,6 @@ const ProfileView = () => {
                 <p className='text-[15px] poppins'>India</p>
             </div>
 
-
-
             <Modal
                 isOpen={isModalOpen}
                 modalWrapDiv={"fixed top-0 right-0 left-0 bg-[#cececeb3] z-50 flex justify-center items-center w-full h-[calc(100%-1rem)] max-h-full overflow-y-auto overflow-x-hidden"}
@@ -36,7 +70,6 @@ const ProfileView = () => {
                     setModalOpen(false)}
                 content={(
                     <div>
-
                         <div class="flex items-center justify-center w-full">
                             <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                 <div class="flex flex-col items-center justify-center pt-5 pb-6">
@@ -46,12 +79,31 @@ const ProfileView = () => {
                                     <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
                                     <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
                                 </div>
-                                <input id="dropzone-file" type="file" class="hidden" />
+                                <input
+                                    id="dropzone-file"
+                                    type="file"
+                                    className="hidden"
+                                    onChange={(e) => setSelectedFile(e.target.files[0])}
+                                />
                             </label>
                         </div>
 
+                        {preview && (
+                            <div className="flex justify-center mt-4">
+                                <img
+                                    src={preview}
+                                    alt="Selected Preview"
+                                    className="max-h-48 rounded-lg border"
+                                />
+                            </div>
+                        )}
+
                         <div className='flex justify-center items-cenetr mt-5'>
-                            <button type="button" class="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800">
+                            <button
+                                type="button"
+                                onClick={handleUpload}
+                                className="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800"
+                            >
                                 Save image
                             </button>
 

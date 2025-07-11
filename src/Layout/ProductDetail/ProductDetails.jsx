@@ -1,20 +1,22 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import AccordionItem from "../../Components/AccordionItem/AccordionItem";
 import { fetchProductsDetails } from "../../API/userAPI";
 import { useLocation } from "react-router-dom";
+import { ProductContext } from './ProductContext';
 
 const ProductDetails = () => {
     const location = useLocation()
     const [openIndex, setOpenIndex] = useState(0); // <-- Default open the first item
-    const [productData,setProductData]=useState([])
-    console.log('pro-data',productData);
-    
-    const id= location?.state?.id
+    const [productData, setProductData] = useState([])
+    const { detailProductData } = useContext(ProductContext);
+    console.log('pro-data', productData);
 
-    useEffect(()=>{
-      fetchProductsDetails(id,setProductData)
-    },[])
-    
+    const id = location?.state?.id
+
+    useEffect(() => {
+        fetchProductsDetails(id, setProductData)
+    }, [])
+
     const toggleAccordion = (index) => {
         setOpenIndex(openIndex === index ? null : index);
     };
@@ -32,7 +34,7 @@ const ProductDetails = () => {
                     discription: "Material Colour"
                 },
                 {
-                    heading:  productData.metal_weight + "g",
+                    heading: productData.metal_weight + "g",
                     discription: "Gross Weightr"
                 },
                 {
@@ -111,29 +113,8 @@ const ProductDetails = () => {
             title: "Description",
             content: [
                 {
-                    heading: "18K",
-                    discription: "Karatage"
-                },
-                {
-                    heading: "Yellow",
-                    discription: "Material Colour"
-                },
-                {
-                    heading: "0.902g",
-                    discription: "Gross Weightr"
-                },
-                {
-                    heading: "Gold",
-                    discription: "Metal"
-                },
-                {
-                    heading: "1.7cm",
-                    discription: "Pendant Heightr"
-                },
-                {
-                    heading: "1 cm",
-                    discription: "Pendant Width"
-                },
+                    description: "Symbolize your love with this 22 Karat yellow gold Mangalsutra, elegantly designed with black beads and golden floral charms for a traditional look.  Designed for the contemporary bride, this Mangalsutra combines traditional elements with modern design. Its perfect for daily wear and special occasions, bringing both beauty and cultural significance.",
+                }
             ]
         },
     ];
@@ -145,7 +126,7 @@ const ProductDetails = () => {
         },
         {
             icons: (
-<svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 512 512"><path fill="none" stroke="#56433d" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" d="m35.42 188.21l207.75 269.46a16.17 16.17 0 0 0 25.66 0l207.75-269.46a16.52 16.52 0 0 0 .95-18.75L407.06 55.71A16.22 16.22 0 0 0 393.27 48H118.73a16.22 16.22 0 0 0-13.79 7.71L34.47 169.46a16.52 16.52 0 0 0 .95 18.75M48 176h416"/><path fill="none" stroke="#56433d" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" d="m400 64l-48 112l-96-128M112 64l48 112l96-128m0 400l-96-272m96 272l96-272"/></svg>            ),
+                <svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 512 512"><path fill="none" stroke="#56433d" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" d="m35.42 188.21l207.75 269.46a16.17 16.17 0 0 0 25.66 0l207.75-269.46a16.52 16.52 0 0 0 .95-18.75L407.06 55.71A16.22 16.22 0 0 0 393.27 48H118.73a16.22 16.22 0 0 0-13.79 7.71L34.47 169.46a16.52 16.52 0 0 0 .95 18.75M48 176h416" /><path fill="none" stroke="#56433d" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" d="m400 64l-48 112l-96-128M112 64l48 112l96-128m0 400l-96-272m96 272l96-272" /></svg>),
         },
         {
             icons: (
@@ -154,11 +135,11 @@ const ProductDetails = () => {
         },
         {
             icons: (
-<svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 20 20"><g fill="#56433d"><path d="M6.5 12a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1zm0 3a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1z"/><path fill-rule="evenodd" d="M11.185 1H4.5A1.5 1.5 0 0 0 3 2.5v15A1.5 1.5 0 0 0 4.5 19h11a1.5 1.5 0 0 0 1.5-1.5V7.202a1.5 1.5 0 0 0-.395-1.014l-4.314-4.702A1.5 1.5 0 0 0 11.185 1M4 2.5a.5.5 0 0 1 .5-.5h6.685a.5.5 0 0 1 .369.162l4.314 4.702a.5.5 0 0 1 .132.338V17.5a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5z" clip-rule="evenodd"/><path d="M11 7h5.5a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5v-6a.5.5 0 0 1 1 0z"/></g></svg>            ),
+                <svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 20 20"><g fill="#56433d"><path d="M6.5 12a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1zm0 3a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1z" /><path fill-rule="evenodd" d="M11.185 1H4.5A1.5 1.5 0 0 0 3 2.5v15A1.5 1.5 0 0 0 4.5 19h11a1.5 1.5 0 0 0 1.5-1.5V7.202a1.5 1.5 0 0 0-.395-1.014l-4.314-4.702A1.5 1.5 0 0 0 11.185 1M4 2.5a.5.5 0 0 1 .5-.5h6.685a.5.5 0 0 1 .369.162l4.314 4.702a.5.5 0 0 1 .132.338V17.5a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5z" clip-rule="evenodd" /><path d="M11 7h5.5a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5v-6a.5.5 0 0 1 1 0z" /></g></svg>),
         },
     ];
 
-    
+
     const svgMobile = [
         {
             icons: (
@@ -166,7 +147,7 @@ const ProductDetails = () => {
         },
         {
             icons: (
-<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 512 512"><path fill="none" stroke="#56433d" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" d="m35.42 188.21l207.75 269.46a16.17 16.17 0 0 0 25.66 0l207.75-269.46a16.52 16.52 0 0 0 .95-18.75L407.06 55.71A16.22 16.22 0 0 0 393.27 48H118.73a16.22 16.22 0 0 0-13.79 7.71L34.47 169.46a16.52 16.52 0 0 0 .95 18.75M48 176h416"/><path fill="none" stroke="#56433d" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" d="m400 64l-48 112l-96-128M112 64l48 112l96-128m0 400l-96-272m96 272l96-272"/></svg>            ),
+                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 512 512"><path fill="none" stroke="#56433d" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" d="m35.42 188.21l207.75 269.46a16.17 16.17 0 0 0 25.66 0l207.75-269.46a16.52 16.52 0 0 0 .95-18.75L407.06 55.71A16.22 16.22 0 0 0 393.27 48H118.73a16.22 16.22 0 0 0-13.79 7.71L34.47 169.46a16.52 16.52 0 0 0 .95 18.75M48 176h416" /><path fill="none" stroke="#56433d" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" d="m400 64l-48 112l-96-128M112 64l48 112l96-128m0 400l-96-272m96 272l96-272" /></svg>),
         },
         {
             icons: (
@@ -175,14 +156,14 @@ const ProductDetails = () => {
         },
         {
             icons: (
-<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 20 20"><g fill="#56433d"><path d="M6.5 12a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1zm0 3a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1z"/><path fill-rule="evenodd" d="M11.185 1H4.5A1.5 1.5 0 0 0 3 2.5v15A1.5 1.5 0 0 0 4.5 19h11a1.5 1.5 0 0 0 1.5-1.5V7.202a1.5 1.5 0 0 0-.395-1.014l-4.314-4.702A1.5 1.5 0 0 0 11.185 1M4 2.5a.5.5 0 0 1 .5-.5h6.685a.5.5 0 0 1 .369.162l4.314 4.702a.5.5 0 0 1 .132.338V17.5a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5z" clip-rule="evenodd"/><path d="M11 7h5.5a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5v-6a.5.5 0 0 1 1 0z"/></g></svg>            ),
+                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 20 20"><g fill="#56433d"><path d="M6.5 12a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1zm0 3a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1z" /><path fill-rule="evenodd" d="M11.185 1H4.5A1.5 1.5 0 0 0 3 2.5v15A1.5 1.5 0 0 0 4.5 19h11a1.5 1.5 0 0 0 1.5-1.5V7.202a1.5 1.5 0 0 0-.395-1.014l-4.314-4.702A1.5 1.5 0 0 0 11.185 1M4 2.5a.5.5 0 0 1 .5-.5h6.685a.5.5 0 0 1 .369.162l4.314 4.702a.5.5 0 0 1 .132.338V17.5a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5z" clip-rule="evenodd" /><path d="M11 7h5.5a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5v-6a.5.5 0 0 1 1 0z" /></g></svg>),
         },
     ];
 
 
     return (
         <div className="md:px-[25%]  md:py-[70px] px-[40px] py-[50px] ">
-            {data.map((item, index) => (
+            {detailProductData?.details?.map((item, index) => (
                 <AccordionItem
                     key={index}
                     icon={svg[index].icons}
@@ -190,11 +171,11 @@ const ProductDetails = () => {
                     index={index}
                     title={item.title}
                     content={item.content}
-                    isOpen={openIndex === index}    
+                    isOpen={openIndex === index}
                     toggle={toggleAccordion}
                 />
             ))}
-           
+
         </div>
     );
 };

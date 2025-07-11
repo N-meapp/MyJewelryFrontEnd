@@ -11,6 +11,8 @@ import HomeEnquire from '../../Layout/HomeEnquire/HomeEnquire';
 import Footer from '../../Layout/Footer/Footer';
 import TopCategories from '../../Layout/HomeExplore/TopCategories';
 import MainMobileNav from '../../Layout/Navbar/MainMobileNav';
+import ChatBoat from '../../Components/ChatBot/ChatBoat';
+
 
 
 const Home = () => {
@@ -26,6 +28,7 @@ const Home = () => {
       <HomeNewArrivals />
       <HomeCategory />
       <HomeClassicCollection />
+       <ChatBoat />
       <HomeEnquire />
       <Footer />
     </>

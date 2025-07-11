@@ -40,9 +40,9 @@ const Wishlist = () => {
         </div>
         <div className='grid grid-cols-12 gap-2 w-full mt-9'>
             <div className='col-span-12  md:col-span-12'>
-              {wishlistData.map((item)=>(
+              {wishlist.map((item)=>(
                     <WishlistCard stockCss={item.stock_message === "Stock in" ? 'robo text-[13px] text-[#18c20f] font-[700]' :'robo text-[13px] text-[#c20f0f] font-[700]' }
-                     img={item.image} productName={item.product_name} unitPrize={item.price}  StockStatus={item.stock_message} productId={item.product_id}  />
+                     img={item?.product?.product_image} productName={item.product.product_name} unitPrize={item.product.price}  StockStatus={item.stock_message} productId={item.product.id}  />
               ))}
             </div>
         </div>

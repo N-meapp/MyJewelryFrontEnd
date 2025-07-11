@@ -10,7 +10,7 @@ const WishlistCard = ({ img, productName, unitPrize, StockStatus, stockCss, prod
                 {/* Image section - always visible */}
                 <div className="col-span-4 md:col-span-2 flex items-center justify-center">
                     <div className="relative shadow-md p-4 pl-[5px] pr-[5px]  bg-[#fff] w-fit rounded-[10px] ">
-                        <img className="rounded-[10px] w-full max-w-[80px] md:max-w-full" src={img} alt="product" />
+                        <img className="rounded-[10px] w-full max-w-[80px] md:max-w-full h-[100px]" src={img} alt="product" />
                         <p className="poppinse font-[500] text-[12px] text-[#474141] text-center">View more</p>
                         <hr className="w-[60px] border border-[#cdc7c5] absolute bottom-[5px] left-[29%]" />
                     </div>

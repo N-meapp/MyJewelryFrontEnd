@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 
-const   AccordionItem = ({ index, title, content, isOpen, toggle, icon,mobileIcon }) => {
+const AccordionItem = ({ index, title, content, isOpen, toggle, icon, mobileIcon }) => {
     const contentRef = useRef(null);
 
     useEffect(() => {
@@ -16,6 +16,9 @@ const   AccordionItem = ({ index, title, content, isOpen, toggle, icon,mobileIco
     const upSVG = (
         <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" viewBox="0 0 20 20"><path fill="#56433d" fill-rule="evenodd" d="M10.103 7.222q5.17 5.202 6.89 6.887c.198.185.539.56 1.046.07q.508-.49-.039-1.073l-7.444-7.43a.64.64 0 0 0-.455-.176a.7.7 0 0 0-.472.176l-7.453 7.635q-.362.582.03.98q.39.398.95.043z" /></svg>
     );
+
+    console.log(content, " contentssssss");
+
 
     return (
         <div className="border-b border-slate-200 ">
@@ -38,16 +41,33 @@ const   AccordionItem = ({ index, title, content, isOpen, toggle, icon,mobileIco
             <div
                 ref={contentRef}
                 className="max-h-0 overflow-hidden transition-all duration-300 ease-in-out flex-wrap "
-            >   
+            >
                 <div className="grid grid-cols-12 gap-x-2 md:gap-y-16 gap-y-6 md:px-[60px] md:py-[40px] px-[20px] py-[10px] ">
-           
-                        {content.map((item, i) => (
-                            <div key={i} className="col-span-4 md:col-span-4">
-                                <h4 className="text-[#56433d] bolkit md:text-[24px] text-[15px] font-[600]">{item.heading}</h4>
-                                <p className="text-[#b2b0b0] md:text-[16px] text-[10px] poppins font-[400]">{item.discription}</p>
-                            </div>
-                        ))}
-                    
+
+                    {content.map((item, i) => (
+                        <div
+                            key={i}
+                            className={
+                                item.discription === "" || !item.discription
+                                    ? "col-span-12"
+                                    : "col-span-4 md:col-span-4"
+                            }
+                        >
+                            <h4 className={`text-[#56433d]  ${item.discription === "" || !item.discription
+                                    ? "md:text-[15px] text-[13px]"
+                                    : "md:text-[24px] bolkit text-[15px] font-[600]"
+                                } `}>
+                                {item.heading || item.description}
+                            </h4>
+
+                            {item.discription && (
+                                <p className="text-[#b2b0b0] md:text-[16px] text-[10px] poppins font-[400]">
+                                    {item.discription}
+                                </p>
+                            )}
+                        </div>
+                    ))}
+
                 </div>
             </div>
         </div>

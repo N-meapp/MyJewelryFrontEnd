@@ -1,9 +1,10 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import Modal from '../../Components/Modal/Modal'
 import VirtualTryOn from '../../Components/AR3DModel/VirtualTryOn.jsx';
-import { fetchProductsDetails } from '../../API/userAPI.js';
+import { addToWishlist, fetchProductsDetails, removeToWishlist, sentEnquery } from '../../API/userAPI.js';
 import { useLocation } from 'react-router-dom';
 
+import { ProductContext } from "./ProductContext.js"
 
 const DetailHeader = () => {
     const location = useLocation()
@@ -14,8 +15,11 @@ const DetailHeader = () => {
     const [showTryItOn, setShowTryItOn] = useState(false);
 
     const [isModalTryitOnOpen, setModalTryitOnOpen] = useState(false);
+    const { setDetailProductData } = useContext(ProductContext);
     const [productData, setProductData] = useState([])
 
+
+    console.log(productData, "wwwwwwwwwwwwwwwwww");
 
 
     useEffect(() => {
@@ -29,6 +33,17 @@ const DetailHeader = () => {
         }, 2000);
         return () => clearInterval(interval);
     }, []);
+
+
+    //   useEffect(() => {
+    //     // Simulate fetch or some logic
+    //     const data = [{ id: 1, name: 'Gold Ring' }];
+    //     setProductData(data);
+    //   }, []);
+
+
+
+
 
 
     const imgRef = useRef(null);
@@ -63,6 +78,41 @@ const DetailHeader = () => {
     };
 
     const handleMouseLeave = () => setShowGlass(false);
+
+
+    const addWishlist = (id) => {
+        console.log(id, "idddddddddddddd");
+        addToWishlist({ id });
+
+        setProductData((prev) => ({ ...prev, is_wishlisted: true }));
+    };
+
+    const removeWishlist = (id) => {
+        console.log(id, "idddddddddddddd");
+        removeToWishlist({ id });
+        setProductData((prev) => ({ ...prev, is_wishlisted: false }));
+    };
+
+
+const sentToEnquery = async (p_id) => {
+  try {
+    const res = await sentEnquery({ id: p_id });
+    console.log("Enquiry sent:", res);
+    if(res.message =="Enquiry submitted successfully."){
+        alert("Enquiry submitted successfully");
+    }
+  } catch (error) {
+    console.log("Enquiry failed:", error);
+  }
+};
+
+
+  useEffect(() => {
+    if (productData?.id) {
+      setDetailProductData(productData); // Send to context
+    }
+  }, [productData]);
+
     return (
         <>
             <div className='w-full px-4 sm:px-6 md:px-[100px]  py-6 md:py-[50px] '>
@@ -70,16 +120,16 @@ const DetailHeader = () => {
                 {/* <div className='bg-[#ffffff] md:rounded-[16px] rounded-[20px] md:px-[55px] md:py-[30px] ' style={{ 'box-shadow': '4px 0px 50px 0px rgba(0, 0, 0, 0.1)' }}> */}
                 <div className="bg-[#ffffff] md:rounded-[16px] rounded-[20px] px-[10px] md:px-[55px] md:py-[30px] md:shadow-xl">
 
-                    <div className='grid grid-cols-12 gap-1  '>
+                    <div className='grid grid-cols-12 gap-1 '>
                         <div className='col-span-12 md:col-span-4'>
                             <div className='border-2 border-[#ccc4b8] rounded-[20px] relative  flex justify-center'>
                                 <div className=" absolute right-5 top-3 cursor-pointer">
                                     {productData.is_wishlisted ?
-                                        <svg onClick={(e) => { e.stopPropagation(); setWishlist(false); }} className="rounded-full p-[2px] shadow-md z-50 transition-transform duration-300 ease-in-out hover:scale-125 " xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
+                                        <svg onClick={(e) => { e.stopPropagation(); removeWishlist(productData.id) }} className="rounded-full p-[2px] shadow-md z-50 transition-transform duration-300 ease-in-out hover:scale-125 " xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
                                             <path fill="#7b5725" d="M2 9.137C2 14 6.02 16.591 8.962 18.911C10 19.729 11 20.5 12 20.5s2-.77 3.038-1.59C17.981 16.592 22 14 22 9.138S16.5.825 12 5.501C7.5.825 2 4.274 2 9.137" />
                                         </svg>
                                         :
-                                        <svg onClick={(e) => { e.stopPropagation(); setWishlist(true); }} className=" rounded-full p-[2px] shadow-md transition-transform duration-300 ease-in-out hover:scale-125 " xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
+                                        <svg onClick={(e) => { e.stopPropagation(); addWishlist(productData.id); }} className=" rounded-full p-[2px] shadow-md transition-transform duration-300 ease-in-out hover:scale-125 " xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
                                             <path className="shadow-md" fill="#7b5725" fill-rule="evenodd" d="M5.624 4.424C3.965 5.182 2.75 6.986 2.75 9.137c0 2.197.9 3.891 2.188 5.343c1.063 1.196 2.349 2.188 3.603 3.154q.448.345.885.688c.526.415.995.778 1.448 1.043s.816.385 1.126.385s.674-.12 1.126-.385c.453-.265.922-.628 1.448-1.043q.437-.344.885-.687c1.254-.968 2.54-1.959 3.603-3.155c1.289-1.452 2.188-3.146 2.188-5.343c0-2.15-1.215-3.955-2.874-4.713c-1.612-.737-3.778-.542-5.836 1.597a.75.75 0 0 1-1.08 0C9.402 3.882 7.236 3.687 5.624 4.424M12 4.46C9.688 2.39 7.099 2.1 5 3.059C2.786 4.074 1.25 6.426 1.25 9.138c0 2.665 1.11 4.699 2.567 6.339c1.166 1.313 2.593 2.412 3.854 3.382q.43.33.826.642c.513.404 1.063.834 1.62 1.16s1.193.59 1.883.59s1.326-.265 1.883-.59c.558-.326 1.107-.756 1.62-1.16q.396-.312.826-.642c1.26-.97 2.688-2.07 3.854-3.382c1.457-1.64 2.567-3.674 2.567-6.339c0-2.712-1.535-5.064-3.75-6.077c-2.099-.96-4.688-.67-7 1.399" clip-rule="evenodd" />
                                         </svg>
                                     }
@@ -192,7 +242,7 @@ const DetailHeader = () => {
                                         <p className='inter md:text-[12px] text-[9px] text-[#a29f9f]'>Incl. taxes and charges </p>
                                     </div>
                                     <div>
-                                        <button type="button" class="text-white flex  md:gap-2 gap-2  bg-[#56433D] hover:bg-[#795f57] poppins font-medium md:rounded-lg rounded-[10px] text-[14px]  md:px-24 px-[60px] py-2.5 md:py-2.5 md:me-2 mb-2">
+                                        <button onClick={() => sentToEnquery(productData.id)} type="button" class="text-white flex  md:gap-2 gap-2  bg-[#56433D] hover:bg-[#795f57] poppins font-medium md:rounded-lg rounded-[10px] text-[14px]  md:px-24 px-[60px] py-2.5 md:py-2.5 md:me-2 mb-2">
                                             <img className='md:w-[20px] md:h-[20px] w-[15px] h-[15px] md:mt-0 mt-1' src='/public/assets/Images/ProductDetails/w1.png' />
                                             Enquire
                                         </button>
