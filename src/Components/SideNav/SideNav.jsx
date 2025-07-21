@@ -1,7 +1,21 @@
-import React from "react";
+import React, { useContext, useEffect } from 'react'
 import Filter from "../Filter/Filter";
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-const SideNav = ({ isOpen, onClose }) => {
+const SideNav = ({ isOpen, onClose}) => {
+    const dispatch = useDispatch();
+const mobileFilterData = useSelector((state) => state.filter.mobileFilterData);
+
+  const handleFilterResult = (result) => {
+    // Save filtered result to Redux
+    dispatch({
+      type: "SET_CATEGORY_FILTERED_DATA",
+      payload: result,
+    });
+
+  };
+
   return (
     <>
       {/* Overlay */}
@@ -27,7 +41,7 @@ const SideNav = ({ isOpen, onClose }) => {
             &times;
           </button>
         </div>
-        <Filter />
+        <Filter item={mobileFilterData} onApplyFilter={handleFilterResult} />
       </aside>
     </>
   );

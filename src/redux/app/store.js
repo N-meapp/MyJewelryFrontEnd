@@ -48,10 +48,88 @@ function adminReducer(state = initialAdminState, action) {
   }
 }
 
+const initialFilterState = {
+  mobileFilterData: null,
+};
+
+
+function filterReducer(state = initialFilterState, action) {
+  switch (action.type) {
+    case 'SET_MOBILE_FILTER_DATA':
+      return {
+        ...state,
+        mobileFilterData: action.payload,
+      };
+    case 'CLEAR_MOBILE_FILTER_DATA':
+      return {
+        ...state,
+        mobileFilterData: null,
+      };
+    default:
+      return state;
+  }
+}
+
+
+
+const initialFilteredState = {
+  categoryFilteredData: null,
+};
+
+
+function categoryFilteredReducer(state = initialFilteredState, action) {
+  switch (action.type) {
+    case 'SET_CATEGORY_FILTERED_DATA':
+      return {
+        ...state,
+        categoryFilteredData: action.payload,
+      };
+    case 'SET_CATEGORY_FILTERED_DATA':
+      return {
+        ...state,
+        categoryFilteredData: null,
+      };
+    default:
+      return state;
+  }
+}
+
+
+
+const initialGenderFilteredState = {
+  genderFilteredData: null,
+};
+
+
+function genderFilteredReducer(state = initialGenderFilteredState, action) {
+  switch (action.type) {
+    case 'SET_GENDER_FILTERED_DATA':
+      return {
+        ...state,
+        genderFilteredData: action.payload,
+      };
+    case 'SET_GENDER_FILTERED_DATA':
+      return {
+        ...state,
+        genderFilteredData: null,
+      };
+    default:
+      return state;
+  }
+}
+
+
+
+
+
+
 // Combine reducers
 const rootReducer = combineReducers({
   user: userReducer,
   admin: adminReducer,
+  filter: filterReducer,
+  categoryfiltered:categoryFilteredReducer,
+  genderfilter: genderFilteredReducer,
 });
 
 // Persist Config

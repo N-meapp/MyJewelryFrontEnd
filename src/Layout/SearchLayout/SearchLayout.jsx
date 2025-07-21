@@ -15,7 +15,7 @@ const SearchLayout = ({ searchData, searchStatus, mobailNavClosing }) => {
 
     console.log(searchStatus, "qqqqqqqqqqqqqqqqq");
 
-    console.log(searchData, "rrrrrrrrrrrrrrrrr");
+    console.log(data, "rrrrrrrrrrrrrrrrr");
 
     return (
         <div className="absolute lg:h-screen mt-1 lg:mt-[0px] h-[100vh] w-[100%] lg:w-screen left-[-0%] lg:left-[-450px] z-10 overflow-hidden  scroll-hidden">
@@ -30,7 +30,7 @@ const SearchLayout = ({ searchData, searchStatus, mobailNavClosing }) => {
                 <div className="flex flex-col gap-4 mb-6">
                     <h1 className="text-lg text-[#2f2421] alice mt-8 lg:mt-0">{searchStatus ? "Suggested Categories" : "Popular Searches"}</h1>
                     <div className="flex gap-2 flex-wrap justify-center lg:justify-normal">
-                        {(searchStatus ? data.suggested_categories : data.popular_categories)?.map((item, index) => (
+                        {(searchStatus ? data?.suggested_categories : data?.popular_categories)?.map((item, index) => (
                             <p
                                 // key={index}
                                 onClick={() => navigate("/ProductListing", {state: { id: `${item.id}` } })}
@@ -50,7 +50,7 @@ const SearchLayout = ({ searchData, searchStatus, mobailNavClosing }) => {
                 <div className="flex flex-col gap-4">
                     <h1 className="text-lg text-[#2f2421] alice">{searchStatus ? "Siggested Products" : "Trending Products"}</h1>
                     <div className="flex gap-4 flex-wrap justify-center lg:justify-normal">
-                        {(searchStatus ? data.suggested_products : data?.popular_products)?.map((item, index) => (
+                        {(searchStatus ? data?.suggested_products : data?.popular_products)?.map((item, index) => (
                             <div
                                 key={index}
                                 onClick={(e) => {
@@ -75,7 +75,7 @@ const SearchLayout = ({ searchData, searchStatus, mobailNavClosing }) => {
                 {/* Popular Products */}
                 <div className="flex flex-col gap-4 mt-[40px]">
                     <div className="flex gap-4 flex-wrap">
-                        <img className='h-[30vh] w-[100vh] rounded-[10px] contrast-75' src={data.gif} alt="" />
+                        <img className='h-[30vh] w-[100vh] rounded-[10px] contrast-75' src={data?.gif} alt="" />
                     </div>
                 </div>
 

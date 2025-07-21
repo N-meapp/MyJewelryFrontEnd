@@ -1,9 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import './ProductListingLayout.css'
 import ProductCard from "../../Components/Cards/ProductCard";
-import { fetchProductsDataByCategory } from "../../API/userAPI";
+import { fetchFilterData, fetchProductsDataByCategory } from "../../API/userAPI";
 import { useLocation } from "react-router-dom";
 import Filter from "../../Components/Filter/Filter";
+// import { FilterContext } from "../../Components/Filter/FilterContext";
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+
 
 const ProductListingLayout = ({ searchTerm, searchResult }) => {
 
@@ -11,12 +15,19 @@ const ProductListingLayout = ({ searchTerm, searchResult }) => {
   const id = location.state?.id
 
   const [minValue, setMinValue] = useState(0);
-  const [maxValue, setMaxValue] = useState(50000);
+  const [maxValue, setMaxValue] = useState(1000000);
   const priceGap = 5000;
-  const maxRange = 100000;
+  const maxRange = 1000000;
   const progressRef = useRef();
   const [filter, setFilter] = useState(true)
   const [productData, setProductData] = useState({ products: [] });
+  const [filterData, setFliterData] = useState([])
+  // const { setMobailFilterData } = useContext(FilterContext);
+  const dispatch = useDispatch();
+
+  const mobileFilterData = useSelector((state) => state.filter.mobileFilterData);
+
+  console.log(productData, "dataaaaaaa");
 
   useEffect(() => {
     if (!searchTerm) {
@@ -49,10 +60,59 @@ const ProductListingLayout = ({ searchTerm, searchResult }) => {
   const productsToDisplay = productData.products.slice(startIndex, startIndex + itemsPerPage);
 
 
+  useEffect(() => {
+    const getData = async () => {
+      const data = await fetchFilterData({ id });
+      setFliterData(data?.filter_category);
+    };
+
+    getData();
+  }, [id]);
+
+
+  useEffect(() => {
+    if (productData?.filter_category?.length > 0) {
+      dispatch({
+        type: 'SET_MOBILE_FILTER_DATA',
+        payload: productData.filter_category[0],
+      });
+    }
+  }, [productData]);
+
+
+// ✅ useSelector must be at top level
+  const mobileFilteredData = useSelector(
+    (state) => state.categoryfiltered.categoryFilteredData
+  );
+
+  useEffect(() => {
+    if (mobileFilteredData) {
+      setProductData(mobileFilteredData);
+    }
+
+  }, [mobileFilteredData]);
+
+  const handleFilterResult = (result) => {
+    // Save filtered result to Redux
+    dispatch({
+      type: "SET_CATEGORY_FILTERED_DATA",
+      payload: result,
+    });
+
+  };
+
+
+  useEffect(() => {
+  return () => {
+    dispatch({ type: "SET_MOBILE_FILTER_DATA" });
+  };
+}, []);
+
+  console.log(mobileFilteredData, "moabil and website filter applay 000000000");
+  
+
   return (
-
     <div className="transition-all duration-500 ease-in-out mb-[50px] md:mb-0 justify-center grid">
-
       {!filter && (
         <button
           onClick={() => setFilter(true)}
@@ -96,7 +156,9 @@ const ProductListingLayout = ({ searchTerm, searchResult }) => {
                 />
               </svg>
             </button>
-            <Filter />
+            {productData?.filter_category?.length > 0 && (
+              <Filter item={mobileFilterData} onApplyFilter={handleFilterResult} />
+            )}
           </div>
         )}
 

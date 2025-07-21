@@ -7,7 +7,6 @@ const PriceBreakup = () => {
     const { detailProductData } = useContext(ProductContext);
     console.log(detailProductData, "priceyyyyyyyyyyyyyyyyy");
 
-
     // useEffect(() => {
     //     const data = getPriceBreakupData(); // No axios needed
     //     setPriceData(data);

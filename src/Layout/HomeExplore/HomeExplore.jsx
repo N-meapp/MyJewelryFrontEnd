@@ -34,7 +34,6 @@ const HomeExplore = () => {
                             ))}
                         </div>
 
-
                         {/* Second row (remaining 2 items + "View More") */}
                         <div className="flex flex-wrap justify-center gap-x-4 gap-y-10 w-full">
                             {categoryData.slice(5, 7).map((product) => (

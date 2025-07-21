@@ -4,31 +4,42 @@ import LoadMoreButton from "../../Components/Buttons/LoadMoreButton";
 import { fetchProductsDataByGender } from "../../API/userAPI";
 
 
-export default function CategoryProductsListing({ selectedCategory,searchTerm,searchResult }) {
-    
-    const [productData, setProductData] = useState([])
+export default function CategoryProductsListing({ selectedCategory, searchTerm, searchResult }) {
 
-    console.log(selectedCategory,searchTerm,searchResult , "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
-    
+  const [productData, setProductData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 9;
 
-    useEffect(() => {
-        if (selectedCategory && !searchTerm ) {
-            fetchProductsDataByGender(selectedCategory, setProductData);
-        }
-    }, [selectedCategory,searchTerm]);
-     const filteredProducts = searchTerm ? searchResult : productData;
-     
-    //   pagination functions
-      const itemsPerPage = 9; 
-      const [currentPage, setCurrentPage] = useState(1);
-    
-      const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-      const startIndex = (currentPage - 1) * itemsPerPage;
-      const productsToDisplay = filteredProducts.slice(startIndex, startIndex + itemsPerPage);
-     
-    return (
-        <>
-            <div className="h-full w-fit md:mt-[40px] mt-[15px] grid md:grid-cols-3 grid-cols-2 gap-[10px] mx-auto">
+  useEffect(() => {
+    if (selectedCategory && !searchTerm) {
+      fetchProductsDataByGender(selectedCategory, (data) => {
+        setProductData(data?.products || []);
+      });
+    }
+  }, [selectedCategory, searchTerm]);
+
+  const filteredProducts = searchTerm ? searchResult : productData;
+
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const productsToDisplay = filteredProducts.slice(startIndex, startIndex + itemsPerPage);
+
+
+   useEffect(() => {
+      if (productData?.filter_category?.length > 0) {
+        dispatch({
+          type: 'SET_GENDER_FILTERED_DATA',
+          payload: productData.filter_category[0],
+        });
+      }
+    }, [productData]);
+
+
+  console.log(productsToDisplay, "Products to display");
+
+  return (
+    <>
+      <div className="h-full w-fit md:mt-[40px] mt-[15px] grid md:grid-cols-3 grid-cols-2 gap-[10px] mx-auto">
         {productsToDisplay.map((item, index) => (
           <ProductCard key={item.id || index} item={item} />
         ))}
@@ -47,9 +58,8 @@ export default function CategoryProductsListing({ selectedCategory,searchTerm,se
           <button
             key={i}
             onClick={() => setCurrentPage(i + 1)}
-            className={`px-3 py-1 rounded ${
-              currentPage === i + 1 ? 'bg-[#732525] text-white' : 'bg-gray-200 text-black'
-            } hover:bg-[#c8983e] hover:text-[#fff]`}
+            className={`px-3 py-1 rounded ${currentPage === i + 1 ? 'bg-[#732525] text-white' : 'bg-gray-200 text-black'
+              } hover:bg-[#c8983e] hover:text-[#fff]`}
           >
             {i + 1}
           </button>
@@ -63,7 +73,7 @@ export default function CategoryProductsListing({ selectedCategory,searchTerm,se
         </button>
       </div>
 
-            {/* <LoadMoreButton /> */}
-        </>
-    )
+      {/* <LoadMoreButton /> */}
+    </>
+  )
 }

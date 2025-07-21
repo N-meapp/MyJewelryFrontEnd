@@ -18,6 +18,9 @@ export default function Categories() {
     const [searchTerm, setSearchTerm] = useState('')
     const [searchResult, setSearchResult] = useState([])
     
+
+    console.log(selectedCategory, "rrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+    
     
     return (
         <>

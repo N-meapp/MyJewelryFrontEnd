@@ -37,18 +37,7 @@ export const fetchRelatedProductsData = async (setFetchRelatedProductsData) => {
     }
 }
 
-// Search Products
-export const getSearchProducts = async (value) => {
-    try {
-        const result = await api.get(`${BASE_URL}combined-suggestions/?query=${value}`)
-        console.log('vtvttvtvtvt', result.data);
 
-        return result.data
-
-    } catch (error) {
-        console.log(error);
-    }
-}
 
 // filtered products by category - product listing page
 export const fetchProductsDataByCategory = async (id, setFetchProductsData) => {
@@ -217,6 +206,19 @@ export const FetchWishlistData = async (setFetcheData) => {
     }
 }
 
+
+
+// Search Products
+export const getSearchProducts = async (value) => {
+    try {
+        const result = await api.get(`${BASE_URL}combined-suggestions/?query=${value}`)
+        console.log('vtvttvtvtvt', result.data);
+        return result.data
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const addToWishlist = async ({ id }) => {
     try {
         const formData = new FormData();
@@ -331,3 +333,76 @@ export const handleGoogleLogin = async ({tokenResponse}) =>{
         
     }
 }
+
+
+export const fetchFilterData = async ({ id }) => {
+  try {
+    const result = await api.get(`${BASE_URL}filter-options/${id}/`);
+    return result.data; // Axios automatically parses JSON
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+
+export const PostFilterData = async ({filterState}) => {
+    try {
+        const formData = new FormData();
+        formData.append('subcategory', filterState.category);
+        formData.append('price', JSON.stringify(filterState.price));
+        formData.append('materials', filterState.materials);
+        formData.append('gemstones', filterState.gemstones);
+        formData.append('colors', filterState.colors);
+        const id = filterState.CategoryId;
+        console.log(filterState, "hhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+        
+        const result = await api.post(`${BASE_URL}categories/seven/${id}/`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        return result.data;
+    } catch (error) {
+        console.log("Error in postLoginNumber:", error);
+        throw error;
+    }
+};
+
+
+export const ProductSharing = async ({ id }) => {
+  try {
+    const result = await api.get(`${BASE_URL}share/${id}/`);
+    return result.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const clearFilterData = async ({filterState}) => {
+  try {
+     const formData = new FormData();
+     formData.append('clear', true);
+      const id = filterState.CategoryId;
+    const result = await api.post(`${BASE_URL}categories/seven/${id}/`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+    return result.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+
+
+// export const fetchGenderFilter = async ({ id }) => {
+//   try {
+//     const result = await api.get(`${BASE_URL}filter-options/${id}/`);
+//     return result.data; // Axios automatically parses JSON
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };

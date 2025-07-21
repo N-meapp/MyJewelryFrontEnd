@@ -6,13 +6,19 @@ import { fetchSearchData, getSearchProducts } from '../../API/userAPI';
 import SearchLayout from '../SearchLayout/SearchLayout';
 
 
-const Navbar = ({ hideSearch = false, mobailView, searchTerm, setSearchTerm, setSearchResult }) => {
+const Navbar = ({ hideSearch = false, mobailView, searchTerm, setSearchTerm, setSearchResult, searchResult }) => {
   const navigate = useNavigate();
   const [isSideNavOpen, setIsSideNavOpen] = useState(false);
   const [showSearchLayout, setShowSearchLayout] = useState(false);
   const searchRef = useRef(null);
-  const [seachData, setSearchData] = useState([]);
+  // const [seachData, setSearchData] = useState([]);
   const [searchChange, setSearchChange]= useState(false);
+
+  const [navSearchResult, setNavSearchResult] = useState([]);
+
+
+  console.log(navSearchResult, "8888888888888888888888");
+  
 
   console.log(searchChange, "serch workingh");
   
@@ -25,16 +31,7 @@ const Navbar = ({ hideSearch = false, mobailView, searchTerm, setSearchTerm, set
     })
   }, [searchTerm])
 
-  const handleSearch = (e) => {
-    const value = e.target.value;
-    setSearchTerm(value);
-  
-    if (value.trim().length > 0) {
-      setSearchChange(true);
-    } else {
-      setSearchChange(false);
-    }
-  };
+
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -57,10 +54,37 @@ const Navbar = ({ hideSearch = false, mobailView, searchTerm, setSearchTerm, set
     return () => window.removeEventListener('keydown', handleEsc);
   }, []);
 
-  const searchClickHandle = ()=>{
+
+
+
+
+
+  const searchClickHandle = async ()=>{
     setShowSearchLayout(true)
-    fetchSearchData(setSearchData)
+    await fetchSearchData(setSearchResult)
   }
+
+  const handleSearch = (e) => {
+  const value = e.target.value;
+  setSearchTerm(value);
+
+  if (value.trim().length > 0) {
+    setSearchChange(true);
+  } else {
+    setSearchChange(false);
+  }
+
+  getSearchProducts(value).then((result) => {
+    setSearchResult(result);
+  });
+};
+
+
+  useEffect(()=>{
+   setNavSearchResult(searchResult)
+  },[searchResult])
+
+
 
   return (
     <div >
@@ -86,7 +110,8 @@ const Navbar = ({ hideSearch = false, mobailView, searchTerm, setSearchTerm, set
                   type="text" id="simple-search" className="bg-gray-50  text-gray-900 text-sm rounded-[19px] w-full ps-10 p-2.5
                    focus:outline-none dark:placeholder-gray-400 dark:text-white" placeholder="Search for Gold Jewellery, Diamond Jewellery...." />
               </div>
-              {showSearchLayout && <SearchLayout searchData={seachData} searchStatus={searchChange} />}
+              {showSearchLayout && <SearchLayout searchData={navSearchResult} searchStatus={searchChange} />}
+
 
             </div>
           </form>
@@ -109,6 +134,7 @@ const Navbar = ({ hideSearch = false, mobailView, searchTerm, setSearchTerm, set
       </div>
       {/* mobail view layout */}
       {mobailView}
+      
       <SideNav
         isOpen={isSideNavOpen}
         onClose={() => setIsSideNavOpen(false)}

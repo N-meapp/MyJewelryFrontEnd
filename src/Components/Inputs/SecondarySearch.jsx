@@ -30,6 +30,8 @@ export default function SecondarySearch({searchTerm,setSearchTerm,setSearchResul
         return () => window.removeEventListener('keydown', handleEsc);
     }, []);
 
+    
+
     return (
         <>
 

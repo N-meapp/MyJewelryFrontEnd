@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import './MegaDropdown.css';
+import { useNavigate } from "react-router-dom";
 
 const MegaDropdown = ({ data }) => {
     const [activeTab, setActiveTab] = useState('Category');
     const tabs = Object.keys(data?.mega || {});
-
-    
+    const navigate = useNavigate();
 
     return (
         <div className="absolute top-full w-screen left-0 right-[20px] mt-1  bg-white shadow-2xl rounded-xl  z-50 fade-inn">
@@ -31,7 +31,7 @@ const MegaDropdown = ({ data }) => {
                             <>
                              <div className="grid grid-cols-3 gap-11 pt-5">
                                 {data?.mega?.[activeTab]?.map((item) => (
-                                    <div key={item.id} className="grid grid-cols-12 ">
+                                    <div key={item.id} onClick={() => navigate("/ProductListing", {state: { id: `${item.id}` } })} className="grid grid-cols-12 ">
                                         <div className="col-span-12 md:col-span-12 flex">
                                             <img src={item.icon} alt="icon" className="w-10 h-10 rounded-full" />
                                             <span className="text-[13px] poppins text-[#56433d] mt-2">{item.label}</span>
