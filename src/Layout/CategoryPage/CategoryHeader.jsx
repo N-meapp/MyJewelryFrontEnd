@@ -69,7 +69,6 @@ export default function CategoryHeader({ setSelectedCategory, settselectedCatego
                             image={item.image}
                             settselectedCategory={settselectedCategory}
                         />
-
                     ))}
                   
                 </div>

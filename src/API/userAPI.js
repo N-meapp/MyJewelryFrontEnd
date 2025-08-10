@@ -16,7 +16,7 @@ export const fetchGenderData = async (setFetchGenderData) => {
 // filtered products by gender - category page
 export const fetchProductsDataByGender = async (id, setFetchProductsData) => {
     try {
-        const result = await api.get(`${BASE_URL}products/by-gender/?gender=${id}`);
+        const result = await api.get(`${BASE_URL}products/by-gender/${id}/`);
         // console.log('fetchproducts',result.data);
 
         setFetchProductsData(result.data);
@@ -42,7 +42,7 @@ export const fetchRelatedProductsData = async (setFetchRelatedProductsData) => {
 // filtered products by category - product listing page
 export const fetchProductsDataByCategory = async (id, setFetchProductsData) => {
     try {
-        const result = await api.get(`${BASE_URL}categories/seven/${id}`);
+        const result = await api.get(`${BASE_URL}categories/seven/${id}/`);
         setFetchProductsData(result.data);
     } catch (error) {
         console.log(error);
@@ -219,6 +219,17 @@ export const getSearchProducts = async (value) => {
     }
 }
 
+
+// export const getMainSearchProducts = async (value) => {
+//     try {
+//         const result = await api.get(`${BASE_URL}combined-suggestions/?query=${value}`)
+//         console.log('vtvttvtvtvt', result.data);
+//         return result.data
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
+
 export const addToWishlist = async ({ id }) => {
     try {
         const formData = new FormData();
@@ -337,7 +348,7 @@ export const handleGoogleLogin = async ({tokenResponse}) =>{
 
 export const fetchFilterData = async ({ id }) => {
   try {
-    const result = await api.get(`${BASE_URL}filter-options/${id}/`);
+    const result = await api.get(`${BASE_URL}categories/seven/${id}/`);
     return result.data; // Axios automatically parses JSON
   } catch (error) {
     console.log(error);
@@ -358,6 +369,31 @@ export const PostFilterData = async ({filterState}) => {
         console.log(filterState, "hhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
         
         const result = await api.post(`${BASE_URL}categories/seven/${id}/`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        return result.data;
+    } catch (error) {
+        console.log("Error in postLoginNumber:", error);
+        throw error;
+    }
+};
+
+
+
+export const PostGenderCategoryFilterData = async ({filterState, genderSelectedId}) => {
+    try {
+        const formData = new FormData();
+        formData.append('subcategory', filterState.category);
+        formData.append('price', JSON.stringify(filterState.price));
+        formData.append('materials', filterState.materials);
+        formData.append('gemstones', filterState.gemstones);
+        formData.append('colors', filterState.colors);
+        const id = filterState.CategoryId;
+        console.log(filterState, "hhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+        
+        const result = await api.post(`${BASE_URL}products/by-gender/${genderSelectedId}/`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
@@ -395,6 +431,21 @@ export const clearFilterData = async ({filterState}) => {
   }
 };
 
+export const clearGenderFilterData = async ({genderSelectedId}) => {
+  try {
+     const formData = new FormData();
+     formData.append('clear', true);
+    const result = await api.post(`${BASE_URL}products/by-gender/${genderSelectedId}/`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+    return result.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 
 
 
@@ -406,3 +457,37 @@ export const clearFilterData = async ({filterState}) => {
 //     console.log(error);
 //   }
 // };
+
+
+
+
+export const FetchTopCategory = async (setFetcheData) => {
+    try {
+        const result = await api.get(`${BASE_URL}mobile/products/`)
+        setFetcheData(result.data)
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+export const fetchPriceFilterData = async (id, setFetchProductsData) => {
+    try {
+        const result = await api.get(`${BASE_URL}products/by-price-range/?range_id=${id}`);
+        setFetchProductsData(result.data);
+    } catch (error) {
+        console.log(error);
+
+    }
+}
+
+
+export const fetchOccasionFilterData = async (id, setFetchProductsData) => {
+    try {
+        const result = await api.get(`${BASE_URL}products-by-occasion/${id}/`);
+        setFetchProductsData(result.data);
+    } catch (error) {
+        console.log(error);
+
+    }
+}

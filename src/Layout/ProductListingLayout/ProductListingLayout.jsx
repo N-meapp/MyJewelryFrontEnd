@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import './ProductListingLayout.css'
 import ProductCard from "../../Components/Cards/ProductCard";
-import { fetchFilterData, fetchProductsDataByCategory } from "../../API/userAPI";
+import { fetchFilterData, fetchOccasionFilterData, fetchPriceFilterData, fetchProductsDataByCategory } from "../../API/userAPI";
 import { useLocation } from "react-router-dom";
 import Filter from "../../Components/Filter/Filter";
 // import { FilterContext } from "../../Components/Filter/FilterContext";
@@ -12,7 +12,10 @@ import { useSelector } from 'react-redux';
 const ProductListingLayout = ({ searchTerm, searchResult }) => {
 
   const location = useLocation();
+
   const id = location.state?.id
+  const priceid = location.state?.priceId
+  const occasionid = location.state?.occasionId
 
   const [minValue, setMinValue] = useState(0);
   const [maxValue, setMaxValue] = useState(1000000);
@@ -27,21 +30,62 @@ const ProductListingLayout = ({ searchTerm, searchResult }) => {
 
   const mobileFilterData = useSelector((state) => state.filter.mobileFilterData);
 
+
+
   console.log(productData, "dataaaaaaa");
 
-  useEffect(() => {
-    if (!searchTerm) {
-      fetchProductsDataByCategory(id, (data) => {
-        if (data?.products) {
-          setProductData(data);
-          setCurrentPage(1); // Reset to first page when new data is fetched
-          window.scrollTo(0, 0);
-        } else {
-          setProductData({ products: [] });
-        }
-      });
-    }
-  }, [searchTerm]);
+  if (id) {
+    useEffect(() => {
+      console.log("second use effect working");
+      if (!searchTerm) {
+        fetchProductsDataByCategory(id, (data) => {
+          if (data?.products) {
+            console.log(data, "&&&&&&&&&&&&&");
+            setProductData(data);
+            setCurrentPage(1); // Reset to first page when new data is fetched
+            window.scrollTo(0, 0);
+          } else {
+            setProductData({ products: [] });
+          }
+        });
+      }
+    }, [searchTerm]);
+  }else if(priceid){
+    useEffect(() => {
+      console.log("second use effect working");
+      
+      if (!searchTerm) {
+        fetchPriceFilterData(priceid, (data) => {
+          if (data?.products) {
+            console.log(data, "$$$$$$$$$$$$$$$$$$$$$$4$$$$$$$$$$$$$$$$$$$$$$$");
+            setProductData(data);
+            setCurrentPage(1); // Reset to first page when new data is fetched
+            window.scrollTo(0, 0);
+          } else {
+            // setProductData({ products: [] });
+          }
+        });
+      }
+    }, [searchTerm]);
+  }else if(occasionid){
+    useEffect(() => {
+      console.log("second use effect working");
+      
+      if (!searchTerm) {
+        fetchOccasionFilterData(occasionid, (data) => {
+          if (data?.products) {
+            console.log(data, "thirdsssssssss");
+            setProductData(data);
+            setCurrentPage(1); // Reset to first page when new data is fetched
+            window.scrollTo(0, 0);
+          } else {
+            // setProductData({ products: [] });
+          }
+        });
+      }
+    }, [searchTerm]);
+  }
+
 
   useEffect(() => {
     const minPercent = (minValue / maxRange) * 100;
@@ -55,15 +99,18 @@ const ProductListingLayout = ({ searchTerm, searchResult }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9;
 
-  const totalPages = Math.ceil(productData.products.length / itemsPerPage);
+  const totalPages = Math.ceil(productData?.products?.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const productsToDisplay = productData.products.slice(startIndex, startIndex + itemsPerPage);
+  const productsToDisplay = productData.products?.slice(startIndex, startIndex + itemsPerPage);
+
+
+
 
 
   useEffect(() => {
     const getData = async () => {
       const data = await fetchFilterData({ id });
-      setFliterData(data?.filter_category);
+      setFliterData(data?.filter_category[0]);
     };
 
     getData();
@@ -80,10 +127,12 @@ const ProductListingLayout = ({ searchTerm, searchResult }) => {
   }, [productData]);
 
 
-// ✅ useSelector must be at top level
+  // ✅ useSelector must be at top level
   const mobileFilteredData = useSelector(
     (state) => state.categoryfiltered.categoryFilteredData
   );
+
+  console.log(mobileFilteredData, "");
 
   useEffect(() => {
     if (mobileFilteredData) {
@@ -101,15 +150,14 @@ const ProductListingLayout = ({ searchTerm, searchResult }) => {
 
   };
 
-
   useEffect(() => {
-  return () => {
-    dispatch({ type: "SET_MOBILE_FILTER_DATA" });
-  };
-}, []);
+    return () => {
+      dispatch({ type: "SET_MOBILE_FILTER_DATA" });
+    };
+  }, []);
 
   console.log(mobileFilteredData, "moabil and website filter applay 000000000");
-  
+
 
   return (
     <div className="transition-all duration-500 ease-in-out mb-[50px] md:mb-0 justify-center grid">

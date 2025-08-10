@@ -7,6 +7,18 @@ const MegaDropdown = ({ data }) => {
     const tabs = Object.keys(data?.mega || {});
     const navigate = useNavigate();
 
+
+     const handleClick = (tab, item)=>{
+        if(tab === 'Occasions'){
+            navigate("/ProductListing", {state: { occasionId: `${item.id}` } })
+        }else if(tab === 'Price'){
+            navigate("/ProductListing", {state: { priceId: `${item.id}` } })
+        }else if(tab === 'Gender'){
+          navigate(`/categories`, { state: { id: item.id } })
+        }
+    }
+
+// ()=> navigate(`/categories`, { state: { id: item.id } })
     return (
         <div className="absolute top-full w-screen left-0 right-[20px] mt-1  bg-white shadow-2xl rounded-xl  z-50 fade-inn">
             <div className="flex  gap-6">
@@ -45,7 +57,7 @@ const MegaDropdown = ({ data }) => {
                              <div className="grid grid-cols-4 gap-11 pt-5">
                                 {data?.mega?.[activeTab]?.map((item) => (
                                     <div key={item.id} className="grid grid-cols-12">
-                                        <div className="col-span-12 md:col-span-12 text-center">
+                                        <div onClick={()=>handleClick(activeTab, item)} className="col-span-12 md:col-span-12 text-center" >
                                             <img src={item.icon} alt="icon" className="w-full h-[150px] rounded-[16px] object-cover transition-transform duration-500 ease-in-out hover:scale-110" />
                                             <span className="text-[13px] poppins text-[#56433d] text-center mt-2">{item.label}</span>
                                         </div>
@@ -87,3 +99,4 @@ const MegaDropdown = ({ data }) => {
 };
 
 export default MegaDropdown;
+

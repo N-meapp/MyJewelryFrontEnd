@@ -10,7 +10,8 @@ const ProductListing = () => {
 
   return (
     <div>
-        <Navbar mobailView={<MainMobileNav searchTerm={searchTerm} setSearchTerm={setSearchTerm} setSearchResult={setSearchResult}  />} searchTerm={searchTerm} setSearchTerm={setSearchTerm} setSearchResult={setSearchResult} />
+        <Navbar mobailView={<MainMobileNav searchTerm={searchTerm} setSearchTerm={setSearchTerm}  searchResult={searchResult} setSearchResult={setSearchResult}  />} 
+        searchResult={searchResult} searchTerm={searchTerm} setSearchTerm={setSearchTerm} setSearchResult={setSearchResult} />
         <ProductListingLayout searchTerm={searchTerm} searchResult={searchResult} />
       <Footer />
     </div>

@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import './filter.css';
-import { clearFilterData, PostFilterData } from "../../API/userAPI";
+import { clearFilterData, clearGenderFilterData, PostFilterData, PostGenderCategoryFilterData } from "../../API/userAPI";
+import { useLocation } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 const Filter = ({ item, onApplyFilter }) => {
   const colorsCode = [
@@ -9,7 +11,9 @@ const Filter = ({ item, onApplyFilter }) => {
     { name: 'Red', code: '#c62828' },
     { name: 'Blue', code: '#1a144f' },
   ];
-
+  const genderSelectedId = useSelector((state) => state.genderSelectedId.genderFilterSelectedId);
+    console.log(genderSelectedId, "Gender Selected Id 7777777777777777");
+    
   const priceGap = 5000;  
   const maxRange = 1000000;
   const progressRef = useRef();
@@ -17,6 +21,8 @@ const Filter = ({ item, onApplyFilter }) => {
   const [minValue, setMinValue] = useState(0);
   const [maxValue, setMaxValue] = useState(1000000);
   const [filter, setFilter] = useState(true);
+    const location = useLocation();
+    const isCategoryPage = location.pathname.includes('/categories');
 
   const [filterState, setFilterState] = useState({
     CategoryId: '',
@@ -31,17 +37,13 @@ const Filter = ({ item, onApplyFilter }) => {
     if (item?.category?.id) {
       setFilterState((prev) => ({
         ...prev,
-        CategoryId: item.category.id,
+        CategoryId: isCategoryPage?  item.category.id : item.category.id,
       }));
     }
-  }, [item]);
+  }, [item]);-
 
   console.log(item, "itemmssss");
-
-
   // console.log(filterState, "tttttttt");
-
-
   useEffect(() => {
     if (item?.price_range) {
       const min = Math.floor(item.price_range.min);
@@ -126,14 +128,17 @@ const Filter = ({ item, onApplyFilter }) => {
     });
   };
 
-  const handleApply = async () => {
-    console.log("Selected Filters:", filterState);
+const handleApply = async () => {
+  console.log("Selected Filters:", filterState);
+  
+  const result = isCategoryPage
+    ? await PostGenderCategoryFilterData({ filterState, genderSelectedId })
+    : await PostFilterData({ filterState }); // ✅ Fix: Added `await`
 
-    const result = await PostFilterData({ filterState, })
-    onApplyFilter(result)
-    console.log(result, "resultssssssssss");
+  onApplyFilter(result); // ✅ result will now be the resolved object
+  console.log(result, "resultssssssssss");
+};
 
-  };
 
   useEffect(() => {
     const minPercent = (minValue / maxRange) * 100;
@@ -148,6 +153,12 @@ const Filter = ({ item, onApplyFilter }) => {
     setFilterState({ gemstones: [], colors: [], category: [] });
      const result = await clearFilterData({filterState})
   
+     onApplyFilter(result)
+  }
+
+    const handleGenderClearFilter = async () => {
+    setFilterState({ gemstones: [], colors: [], category: [] });
+     const result = await clearGenderFilterData({genderSelectedId})
      onApplyFilter(result)
   }
 
@@ -265,7 +276,7 @@ const Filter = ({ item, onApplyFilter }) => {
           </div>
           {/* Apply Button */}
           <div className="flex justify-center mb-10 gap-4">
-            <button onClick={handleClearFilter} className="bg-[#ececec] text-[#8f8f8f] hover:text-[#ffff] px-6 py-2 rounded-md font-semibold hover:bg-[#d2d2d2] transition-all">Clear</button>
+            <button onClick={isCategoryPage? handleGenderClearFilter : handleClearFilter} className="bg-[#ececec] text-[#8f8f8f] hover:text-[#ffff] px-6 py-2 rounded-md font-semibold hover:bg-[#d2d2d2] transition-all">Clear</button>
             <button onClick={handleApply} className="bg-[#7B5725] text-white px-6 py-2 rounded-md font-semibold hover:bg-[#6a4e20] transition-all">Apply</button>
           </div>
         </div>

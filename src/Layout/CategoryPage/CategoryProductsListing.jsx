@@ -2,40 +2,58 @@ import { useEffect, useState } from "react";
 import ProductCard from "../../Components/Cards/ProductCard"
 import LoadMoreButton from "../../Components/Buttons/LoadMoreButton";
 import { fetchProductsDataByGender } from "../../API/userAPI";
-
+import { useSelector, useDispatch } from 'react-redux';
 
 export default function CategoryProductsListing({ selectedCategory, searchTerm, searchResult }) {
 
   const [productData, setProductData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9;
+  const dispatch = useDispatch();
 
+ const genderFilteredData = useSelector((state) => state.genderfiltered.genderFilteredData);
+   
   useEffect(() => {
     if (selectedCategory && !searchTerm) {
+
       fetchProductsDataByGender(selectedCategory, (data) => {
+        dispatch({
+          type: 'SET_GENDER_FILTER_DATA',
+          payload: data.filter_category,
+        });
+         dispatch({
+          type: 'SET_GENDER_SELECT_ID',
+          payload: selectedCategory,
+        });
         setProductData(data?.products || []);
       });
     }
   }, [selectedCategory, searchTerm]);
 
-  const filteredProducts = searchTerm ? searchResult : productData;
+  useEffect(()=>{
+    if (genderFilteredData) {
+        setProductData(genderFilteredData?.products);
+    }
+  },[genderFilteredData])
 
+
+  const filteredProducts = searchTerm ? searchResult : productData;
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const productsToDisplay = filteredProducts.slice(startIndex, startIndex + itemsPerPage);
 
 
-   useEffect(() => {
-      if (productData?.filter_category?.length > 0) {
-        dispatch({
-          type: 'SET_GENDER_FILTERED_DATA',
-          payload: productData.filter_category[0],
-        });
-      }
-    }, [productData]);
+  //  useEffect(() => {
+  //     if (productData?.filter_category?.length > 0) {
+  //       dispatch({
+  //         type: 'SET_GENDER_FILTERED_DATA',
+  //         payload: productData.filter_category[0],
+  //       });
+  //     }
+  //   }, [productData]);
 
 
-  console.log(productsToDisplay, "Products to display");
+  console.log(productsToDisplay, "Products to display#######");
 
   return (
     <>
@@ -77,3 +95,8 @@ export default function CategoryProductsListing({ selectedCategory, searchTerm, 
     </>
   )
 }
+
+
+
+
+

@@ -8,13 +8,14 @@ export default function SecondarySearch({searchTerm,setSearchTerm,setSearchResul
 
     const [isSideNavOpen, setIsSideNavOpen] = useState(false);
 
-
     useEffect(() => {
         if (!searchTerm) {
             return setSearchResult([])
         }
-        getSearchProducts(searchTerm).then((result) => {
-            setSearchResult(result);
+        getSearchProducts(searchTerm).then((result)=>{
+            console.log(result.suggested_products , "this is search result");
+            
+            setSearchResult(result.suggested_products);
         });
     },[searchTerm])
 
@@ -30,11 +31,8 @@ export default function SecondarySearch({searchTerm,setSearchTerm,setSearchResul
         return () => window.removeEventListener('keydown', handleEsc);
     }, []);
 
-    
-
     return (
         <>
-
             <div className="md:mt-[245px] mt-[90px] md:w-[60%]  w-[92%] mx-auto relative flex gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#946E55" className="absolute md:left-[2%] left-[4%] top-2.5 size-[25px]">
                     <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
@@ -50,13 +48,9 @@ export default function SecondarySearch({searchTerm,setSearchTerm,setSearchResul
                 </button>
             </div>
             <SideNav
-
                 isOpen={isSideNavOpen}
                 onClose={() => setIsSideNavOpen(false)}
             />
-
-
-
         </>
     )
 }

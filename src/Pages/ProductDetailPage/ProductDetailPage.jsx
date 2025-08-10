@@ -22,7 +22,7 @@ const ProductDetailPage = () => {
 
   return (
     <div>
-      <Navbar mobailView={<SubMobileNav />} searchTerm={searchTerm} setSearchTerm={setSearchTerm} setSearchResult={setSearchResult} />
+      <Navbar mobailView={<SubMobileNav />}  searchResult={searchResult} searchTerm={searchTerm}   setSearchTerm={setSearchTerm} setSearchResult={setSearchResult} />
 
       <ProductContext.Provider value={{ detailProductData, setDetailProductData }}>
         <DetailHeader />

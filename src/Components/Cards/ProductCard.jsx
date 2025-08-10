@@ -12,6 +12,9 @@ export default function ProductCard({ item }) {
 
     const [currentItem, setCurrentItem] = useState(item);
 
+    console.log(currentItem, "corrent item66666666666666666666");
+
+
     const toggleDescription = () => {
         setIsExpanded(!isExpanded)
     }
@@ -46,7 +49,7 @@ export default function ProductCard({ item }) {
                 <div className="md:w-full md:h-[200px] h-[108px] w-full flex justify-center relative">
                     <div className="absolute right-4 top-3 z-20 cursor-pointer">
                         {currentItem?.is_wishlisted ?
-                            <svg onClick={(e) => {e.stopPropagation(); removeWishlist(currentItem.id) }} className="rounded-full p-[2px] shadow-md transition-transform duration-300 ease-in-out hover:scale-125" xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
+                            <svg onClick={(e) => { e.stopPropagation(); removeWishlist(currentItem.id) }} className="rounded-full p-[2px] shadow-md transition-transform duration-300 ease-in-out hover:scale-125" xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
                                 <path fill="#7b5725" d="M2 9.137C2 14 6.02 16.591 8.962 18.911C10 19.729 11 20.5 12 20.5s2-.77 3.038-1.59C17.981 16.592 22 14 22 9.138S16.5.825 12 5.501C7.5.825 2 4.274 2 9.137" />
                             </svg>
                             :
@@ -58,12 +61,18 @@ export default function ProductCard({ item }) {
                     <img
                         className="transition-transform object-cover rounded-md duration-500 ease-in-out hover:scale-110 z-10"
                         alt="product image"
-                        src={currentItem.images ? currentItem.images[0] : currentItem.first_image}
+                        src={
+                            currentItem.images
+                                ? currentItem.images[0]
+                                : currentItem.image
+                                ? currentItem.image
+                                : currentItem.first_image
+                        }
                     />
                 </div>
 
                 <div className="w-full h-[88.37px] relative">
-                    <h1 className="md:text-[16.85px] text-[15px] font-bold bolkit text-[#474141] truncate">{currentItem?.head} cccc</h1>
+                    <h1 className="md:text-[16.85px] text-[15px] font-bold bolkit text-[#474141] truncate">{currentItem?.head}</h1>
                     <div className="md:text-[10px] text-[9px] leading-[13.48px] text-[#474141B2] instrument-san">{currentItem.description
                         ? isExpanded
                             ? currentItem.description

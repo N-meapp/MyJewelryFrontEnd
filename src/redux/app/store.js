@@ -84,10 +84,35 @@ function categoryFilteredReducer(state = initialFilteredState, action) {
         ...state,
         categoryFilteredData: action.payload,
       };
-    case 'SET_CATEGORY_FILTERED_DATA':
+    case 'CLEAR_CATEGORY_FILTERED_DATA':
       return {
         ...state,
         categoryFilteredData: null,
+      };
+    default:
+      return state;
+  }
+}
+
+
+
+
+const initialGenderFilterState = {
+  genderFilterData: null,
+};
+
+
+function genderFilterReducer(state = initialGenderFilterState, action) {
+  switch (action.type) {
+    case 'SET_GENDER_FILTER_DATA':
+      return {
+        ...state,
+        genderFilterData: action.payload,
+      };
+    case 'CLEAR_GENDER_FILTER_DATA':
+      return {
+        ...state,
+        genderFilterData: null,
       };
     default:
       return state;
@@ -108,7 +133,7 @@ function genderFilteredReducer(state = initialGenderFilteredState, action) {
         ...state,
         genderFilteredData: action.payload,
       };
-    case 'SET_GENDER_FILTERED_DATA':
+    case 'CLEAR_GENDER_FILTERED_DATA':
       return {
         ...state,
         genderFilteredData: null,
@@ -118,9 +143,27 @@ function genderFilteredReducer(state = initialGenderFilteredState, action) {
   }
 }
 
+const initialGenderSelectedId = {
+  genderFilterSelectedId: null,
+};
 
 
-
+function genderSelectedIdReducer(state = initialGenderSelectedId, action) {
+  switch (action.type) {
+    case 'SET_GENDER_SELECT_ID':
+      return {
+        ...state,
+        genderFilterSelectedId: action.payload,
+      };
+    case 'CLEAR_GENDER_SELECT_ID':
+      return {
+        ...state,
+        genderFilterSelectedId: null,
+      };
+    default:
+      return state;
+  }
+}
 
 
 // Combine reducers
@@ -129,7 +172,9 @@ const rootReducer = combineReducers({
   admin: adminReducer,
   filter: filterReducer,
   categoryfiltered:categoryFilteredReducer,
-  genderfilter: genderFilteredReducer,
+  genderfilter: genderFilterReducer,
+  genderfiltered: genderFilteredReducer,
+  genderSelectedId: genderSelectedIdReducer
 });
 
 // Persist Config

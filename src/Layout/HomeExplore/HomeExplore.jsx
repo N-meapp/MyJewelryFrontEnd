@@ -14,7 +14,7 @@ const HomeExplore = () => {
 
     return (
         <>
-            <div className='md:block hidden'>
+            <div className='lg:block hidden'>
                 <div className='pt-[130px] pb-[150px]'>
                     <h3 className='text-center text-[#2f2421] text-[30px] alice'>Explore Our Finest Creations</h3>
                     <h5 className='text-center text-[18px] text-[#70695d] instrument-san font-[500]'>Discover unique designs and premium craftsmanship in our latest collection.</h5>

@@ -50,7 +50,7 @@ const MyAccount = () => {
     };
 
     return (
-        <> <div className="md:block hidden"> <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} setSearchResult={setSearchResult} /></div>
+        <> <div className="md:block hidden"> <Navbar  searchResult={searchResult} searchTerm={searchTerm}   setSearchTerm={setSearchTerm} setSearchResult={setSearchResult} /></div>
             <AccountMobileView />
 
             <div className="md:px-[100px] md:py-[70px]">
