@@ -4,6 +4,7 @@ import SideNav from '../../Components/SideNav/SideNav'
 import { useNavigate } from "react-router-dom";
 import { fetchSearchData, getSearchProducts } from '../../API/userAPI';
 import SearchLayout from '../SearchLayout/SearchLayout';
+import logo from '../../../public/assets/Images/logo/logo.png'
 
 
 const Navbar = ({ hideSearch = false, mobailView, searchTerm, setSearchTerm, setSearchResult, searchResult }) => {
@@ -90,7 +91,7 @@ const Navbar = ({ hideSearch = false, mobailView, searchTerm, setSearchTerm, set
     <div >
       <div className='md:flex px-20 py-10  w-full hidden '>
         <div className=' w-3/12'>
-          <img onClick={() => navigate('/')} src='/MyJewelryFrontEnd/public/assets/Images/logo/logo.png' className='max-w-[100px] cursor-pointer ' />
+          <img onClick={() => navigate('/')} src={logo} className='max-w-[100px] cursor-pointer ' />
         </div>
         <div className=' w-6/12'>
           <form class="flex items-center max-w-full mx-auto mt-10">
