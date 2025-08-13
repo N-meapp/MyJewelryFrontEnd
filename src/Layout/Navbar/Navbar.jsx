@@ -90,7 +90,7 @@ const Navbar = ({ hideSearch = false, mobailView, searchTerm, setSearchTerm, set
     <div >
       <div className='md:flex px-20 py-10  w-full hidden '>
         <div className=' w-3/12'>
-          <img onClick={() => navigate('/')} src='public/assets/Images/logo/logo.png' className='max-w-[100px] cursor-pointer ' />
+          <img onClick={() => navigate('/')} src='/MyJewelryFrontEnd/public/assets/Images/logo/logo.png' className='max-w-[100px] cursor-pointer ' />
         </div>
         <div className=' w-6/12'>
           <form class="flex items-center max-w-full mx-auto mt-10">
