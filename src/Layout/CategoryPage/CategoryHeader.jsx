@@ -10,8 +10,7 @@ export default function CategoryHeader({ setSelectedCategory, settselectedCatego
 
     const [category, setCategory] = useState(mensCategory)
     const [categoryData, setCategoryData] = useState([])
-
-        const [profileData, setProfileData] = useState([])
+    const [profileData, setProfileData] = useState([])
   
     
         useEffect(() => {
