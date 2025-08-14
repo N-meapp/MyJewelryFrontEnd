@@ -23,19 +23,27 @@ const PersonalDetails = () => {
 
     console.log(profileData, "......................");
 
-  useEffect(() => {
-    setFormData((prev) => ({
-      ...prev,
-      ...profileData,
-      agree: profileData.agree ?? false,
-    }));
-  }, [profileData]);
+    useEffect(() => {
+        setFormData((prev) => ({
+            ...prev,
+            ...profileData,
+            agree: profileData.agree ?? false,
+        }));
+    }, [profileData]);
 
 
+    // const handleChange = (e) => {
+    //     const { name, value, type, checked } = e.target;
+    //     setFormData({ ...formData, [name]: type === 'checkbox' ? checked : value });
+    // };
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
-        setFormData({ ...formData, [name]: type === 'checkbox' ? checked : value });
+        setFormData((prev) => ({
+            ...prev,
+            [name]: type === 'checkbox' ? checked : value
+        }));
     };
+
 
     const handleSubmit = async () => {
         if (!formData.agree) {
@@ -234,11 +242,12 @@ const PersonalDetails = () => {
                                     <input
                                         type="text"
                                         id="phone"
-                                        name="phone"
+                                        name="phone" // match state key
                                         value={formData.phone_number}
                                         onChange={handleChange}
-                                        className="bg-[fff] border py-4 border-[#000] text-gray-900 text-sm rounded-[5px] focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        className="bg-[#fff] border py-4 border-[#000] text-gray-900 text-sm rounded-[5px] focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     />
+
                                 </div>
                             </div>
 

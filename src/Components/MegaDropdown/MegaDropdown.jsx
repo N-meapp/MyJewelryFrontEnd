@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import './MegaDropdown.css';
 import { useNavigate } from "react-router-dom";
+import megImgcenter from '../../../public/assets/Images/subcategory/center1.png';
+import megImgleft from '../../../public/assets/Images/subcategory/sideimg1.png';
 
 const MegaDropdown = ({ data }) => {
     const [activeTab, setActiveTab] = useState('Category');
@@ -70,7 +72,7 @@ const MegaDropdown = ({ data }) => {
 
                     <hr className='mt-14 border border-[#f0f0f0] mb-4' />
 
-                    <img className='w-full rounded-[10px] h-[118px] object-cover' src='/public/assets/Images/subcategory/center1.png' />
+                    <img className='w-full rounded-[10px] h-[118px] object-cover' src={megImgcenter} />
                     <div className='flex justify-end mt-[-20px]'>
                         <button className="bg-[#b68c6b] text-white px-4 py-2 text-sm rounded-md mr-4">
                             View all collection
@@ -82,7 +84,7 @@ const MegaDropdown = ({ data }) => {
                 {/* Image + CTA */}
                 <div className="w-1/5 flex flex-col justify-between items-center py-12 px-4">
                     <img
-                        src={'/public/assets/Images/subcategory/sideimg1.png'}
+                        src={megImgleft}
                         alt="Jewelry"
                         className="rounded-[20px] object-cover w-full h-full"
                     />

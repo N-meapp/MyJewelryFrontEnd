@@ -4,6 +4,8 @@ import VirtualTryOn from '../../Components/AR3DModel/VirtualTryOn.jsx';
 import { addToWishlist, fetchProductsDetails, ProductSharing, removeToWishlist, sentEnquery } from '../../API/userAPI.js';
 import { useLocation } from 'react-router-dom';
 import { ProductContext } from "./ProductContext.js";
+import goldGif from '../../../public/assets/Images/ProductDetails/gold.gif'
+import diamondGif from '../../../public/assets/Images/ProductDetails/diamond.gif'
 
 const DetailHeader = () => {
     const location = useLocation()
@@ -174,11 +176,11 @@ const DetailHeader = () => {
                                     <path fill="#474141" fill-rule="evenodd" d="M14.25 5.5a3.25 3.25 0 1 1 .833 2.173l-2.717 1.482l-3.04 1.737a3.25 3.25 0 0 1 .31 2.464l5.447 2.971a3.25 3.25 0 1 1-.719 1.316l-5.447-2.97a3.25 3.25 0 1 1-.652-4.902l3.37-1.926l2.729-1.489a3.3 3.3 0 0 1-.114-.856m3.25-1.75a1.75 1.75 0 1 0 0 3.5a1.75 1.75 0 0 0 0-3.5m-11 7a1.75 1.75 0 1 0 0 3.5a1.75 1.75 0 0 0 0-3.5m9.25 7.75a1.75 1.75 0 1 1 3.5 0a1.75 1.75 0 0 1-3.5 0" clip-rule="evenodd" /></svg>
                                 <div className='flex gap-2 md:mt-0 mt-[50px] md:justify-start justify-center'>
                                     <div className='flex'>
-                                        <img className='md:w-[40px] md:h-[40px] w-[26px] h-[26px]' src="/public/assets/Images/ProductDetails/gold.gif" alt="Computer man" />
+                                        <img className='md:w-[40px] md:h-[40px] w-[26px] h-[26px]' src={goldGif} alt="Computer man" />
                                         <p className='md:text-[16px] font-semibold text-[13px] text-[#474141] poppins md:mt-2 mt-1'>{productData.karat} Karat</p>
                                     </div>
                                     <div className='flex'>
-                                        <img className='md:w-[40px] md:h-[40px] w-[26px] h-[26px]' src="/public/assets/Images/ProductDetails/diamond.gif" alt="Computer man" />
+                                        <img className='md:w-[40px] md:h-[40px] w-[26px] h-[26px]' src={diamondGif} alt="Computer man" />
                                         <p className='md:text-[16px] font-semibold text-[13px] text-[#474141] poppins md:mt-2 mt-1'>0.226 ct</p>
                                     </div>
                                 </div>

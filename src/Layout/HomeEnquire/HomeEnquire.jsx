@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { fetchContactData } from '../../API/userAPI'
 import './HomeEnquire.css'
-
+import en2 from '../../../public/assets/Images/enquire/2.png'
+import en1 from '../../../public/assets/Images/enquire/1.png'
 const HomeEnquire = () => {
   const [contactData, setContactData] = useState([])
 
@@ -19,7 +20,7 @@ const HomeEnquire = () => {
           <p className=" text-xl md:text-2xl lg:text-[30px] md:ml-2 bolkit">Connect with us</p>
           <img
             className="w-[80px] h-[80px] md:w-[110px] md:h-[110px] -ml-8 md:ml-0"
-            src="/public/assets/Images/enquire/1.png"
+            src={en1}
             alt="Connect Icon"
           />
         </div>
@@ -43,7 +44,7 @@ const HomeEnquire = () => {
             <div className="w-[80%] md:w-full h-[250px] md:h-[350px] rounded-[12px] overflow-hidden">
               <img
                 className="w-full h-full object-cover rounded-[12px]"
-                src="/public/assets/Images/enquire/2.png"
+                src={en2}
                 alt="Jewelry showcase"
               />
             </div>

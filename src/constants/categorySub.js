@@ -1,4 +1,6 @@
-
+import womenGif from '../../public/assets/Videos/womenheader-gif.gif'
+import menGif from '../../public/assets/Videos/menheader-gif.gif'
+import kidsGif from '../../public/assets/Videos/kidsheader.gif'
 export const womens = [
     {
         image: '/assets/Images/category/women-jwel.png',
@@ -225,7 +227,7 @@ export const womensCategory =
     {
         title: "collection of women’s fashion",
         backgroundColor: "#5B0100",
-        image: "/public/assets/Videos/womenheader-gif.gif",
+        image: womenGif,
         gradient: "linear-gradient(to right, #5B0100 0%, #ffffff00 20%, #ffffff00 70%, #5B0100 100%)",
       }
 
@@ -234,7 +236,7 @@ export const mensCategory =
     {
         title: "Elevate Your Style with Bold & Refined Men's Jewelry",
         backgroundColor: "#1C1720",
-        image: "/public/assets/Videos/menheader-gif.gif",
+        image: menGif,
         gradient: "linear-gradient(to right, #1C1720 0%, #ffffff00 20%, #ffffff00 70%, #1C1720 100%)",
       }
 
@@ -243,6 +245,6 @@ export const kidsCategory =
     {
         title: "Discover the Magic of Playful & Enchanting Kids' Jewelry",
         backgroundColor: "#ad9289",
-        image: "/public/assets/Videos/kidsheader.gif",
+        image: kidsGif,
         gradient: "linear-gradient(to right, #ad9289 0%, #ad928940 20%, #ad928940 70%, #ad9289 100%)",
       }

@@ -1,5 +1,8 @@
 import React from 'react';
 import './HomeFeuture.css'; 
+import f1 from '../../../public/assets/Images/feutuers/f1.png'
+import f2 from '../../../public/assets/Images/feutuers/f2.png'
+import f3 from '../../../public/assets/Images/feutuers/f1.png'
 const HomeFeuture = () => {
     return (
         <div
@@ -53,7 +56,7 @@ const HomeFeuture = () => {
                         </p>
                         <img
                             className='w-[41px] h-[41px] mt-1.5 mb-1.5'
-                            src='/public/assets/Images/feutuers/f1.png'
+                            src={f1}
                             alt='Custom'
                         />
                         <p className='text-[#56433d] md:text-[13px] text-[9px] instrument-san font-[500]'>
@@ -69,7 +72,7 @@ const HomeFeuture = () => {
                         </p>
                         <img
                             className='w-[41px] h-[41px] mt-1.5 mb-1.5'
-                            src='/public/assets/Images/feutuers/f2.png'
+                            src={f2}
                             alt='Latest Designs'
                         />
                         <p className='text-[#56433d] md:text-[13px] text-[8.9px] instrument-san font-[500]'>
@@ -85,7 +88,7 @@ const HomeFeuture = () => {
                         </p>
                         <img
                             className='w-[41px] h-[41px] mt-1.5 mb-1'
-                            src='/public/assets/Images/feutuers/f2.png'
+                            src={f2}
                             alt='Latest Designs'
                         />
                         <p className='text-[#56433d] md:text-[13px] text-[8.9px] instrument-san font-[500]'>

@@ -1,24 +1,24 @@
-
+import menGif from '../../public/assets/Videos/mensection-gif.gif'
+import kidsGif from '../../public/assets/Videos/kidssection-gif.gif'
+import womenGif from '../../public/assets/Videos/womensection-gif.gif'
 
 export const mensCategory ={
     heading:'Get the Look',
     description:'Elevate your style with our exquisite gold jewelry, perfectly curated to complement any look. Discover timeless pieces that add elegance and sophistication to every occasion.',
-    video:'/public/assets/Videos/mensection-gif.gif'
+    video:menGif,
 }
 
 export const kidsCategory ={
     heading:'Get the Look',
     description:'Elevate your style with our exquisite gold jewelry, perfectly curated to complement any look. Discover timeless pieces that add elegance and sophistication to every occasion.',
-    video:'/public/assets/Videos/kidssection-gif.gif'
+    video: kidsGif,
 }
 
 export const womensCategory ={
   heading:'Get the Look',
   description:'Elevate your style with our exquisite gold jewelry, perfectly curated to complement any look. Discover timeless pieces that add elegance and sophistication to every occasion.',
-  video:'/public/assets/Videos/womensection-gif.gif'
+  video: womenGif,
 }
-
-
 
 export const navCategory = [
     {

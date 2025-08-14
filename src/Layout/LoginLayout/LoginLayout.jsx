@@ -40,23 +40,23 @@ const LoginLayout = () => {
     };
 
 
-    const handleLoginSuccess = async (response) => {
-        const access_token = response.credential;
+    // const handleLoginSuccess = async (response) => {
+    //     const access_token = response.credential;
 
-        try {
-            const res = await axios.post('http://127.0.0.1:8000/dj-rest-auth/google/', {
-                access_token,
-            });
+    //     try {
+    //         const res = await axios.post('https://nme360.com/api/dj-rest-auth/google/', {
+    //             access_token,
+    //         });
 
-            console.log('Login success:', res.data);
+    //         console.log('Login success:', res.data);
 
-            // Save tokens
-            localStorage.setItem('access_token', res.data.access);
-            localStorage.setItem('refresh_token', res.data.refresh);
-        } catch (err) {
-            console.error('Backend login error:', err.response?.data || err.message);
-        }
-    };
+    //         // Save tokens
+    //         localStorage.setItem('access_token', res.data.access);
+    //         localStorage.setItem('refresh_token', res.data.refresh);
+    //     } catch (err) {
+    //         console.error('Backend login error:', err.response?.data || err.message);
+    //     }
+    // };
 
 
     const login = useGoogleLogin({

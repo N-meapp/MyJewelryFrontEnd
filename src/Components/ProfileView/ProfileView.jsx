@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Modal from '../Modal/Modal';
 import { useSelector } from "react-redux";
 import { FetchProfileData, PostProfileImage } from '../../API/userAPI';
+import flag from '../../../public/assets/Images/MyAccount/flag.png'
 
 const ProfileView = () => {
     const [isModalOpen, setModalOpen] = useState(false);
@@ -58,7 +59,7 @@ const ProfileView = () => {
             <p className='text-[15px] text-[#000] poppins'>Ms</p>
 
             <div className='flex gap-1'>
-                <img className='w-[20px] h-[20px]' src='/public/assets/Images/MyAccount/flag.png' />
+                <img className='w-[20px] h-[20px]' src={flag} />
                 <p className='text-[15px] poppins'>India</p>
             </div>
 
