@@ -5,53 +5,58 @@ import SearchLayout from '../SearchLayout/SearchLayout';
 import { FetchProfileData, fetchSearchData, getSearchProducts } from '../../API/userAPI';
 import logo from '../../../public/assets/Images/logo/logo.png';
 
-const MainMobileNav = ({searchTerm, setSearchTerm, setSearchResult}) => {
+const MainMobileNav = ({ searchTerm, setSearchTerm, setSearchResult, searchResult }) => {
   const [isSideNavOpen, setIsSideNavOpen] = useState(false);
   const [showSearchLayout, setShowSearchLayout] = useState(false)
   const searchRef = useRef(null);
   const [seachData, setSearchData] = useState([])
   const [searchChange, setSearchChange] = useState(false)
   const [profileData, setProfileData] = useState([])
-    
-      
-          useEffect(() => {
-              FetchProfileData(setProfileData)
-          }, [])
+
+  const [navSearchResult, setNavSearchResult] = useState([]);
+
+  useEffect(() => {
+    FetchProfileData(setProfileData)
+  }, [])
 
   const navigate = useNavigate();
 
-    useEffect(()=> {
-      if (!searchTerm) {
-        return setSearchResult([])
+  useEffect(() => {
+    if (!searchTerm) {
+      return setSearchResult([])
+    }
+    getSearchProducts(searchTerm).then((result) => {
+      setSearchResult(result)
+    })
+  }, [searchTerm])
+
+  const handleSearch = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+
+    if (value.trim().length > 0) {
+      setSearchChange(true);
+    } else {
+      setSearchChange(false);
+    }
+
+    getSearchProducts(value).then((result) => {
+      setSearchResult(result);
+    });
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (searchRef.current && !searchRef.current.contains(e.target)) {
+        setShowSearchLayout(false);
       }
-      getSearchProducts(searchTerm).then((result) => {
-        setSearchResult(result)
-      })
-    }, [searchTerm])
-  
-    const handleSearch = (e) => {
-      const value = e.target.value;
-      setSearchTerm(value);
-    
-      if (value.trim().length > 0) {
-        setSearchChange(true);
-      } else {
-        setSearchChange(false);
-      }
+
     };
-  
-    useEffect(() => {
-      const handleClickOutside = (e) => {
-        if (searchRef.current && !searchRef.current.contains(e.target)) {
-          setShowSearchLayout(false);
-        }
-        
-      };
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
-    }, []);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     const handleEsc = (e) => {
@@ -61,11 +66,20 @@ const MainMobileNav = ({searchTerm, setSearchTerm, setSearchResult}) => {
     return () => window.removeEventListener('keydown', handleEsc);
   }, []);
 
-   const searchClickHandle = ()=>{
-      setShowSearchLayout(true)
-      fetchSearchData(setSearchData)
-    }
+
+
+  useEffect(() => {
+    setNavSearchResult(searchResult)
+  }, [searchResult])
+
+ const searchClickHandle = async ()=>{
+    setShowSearchLayout(true)
+    await fetchSearchData(setSearchResult)
+  }
+
   return (
+
+
     <>
       <div className='w-[90%]  mx-auto h-[60px] md:mt-[49px] mt-[30px] flex justify-between md:hidden  '>
         <img src={logo} className='md:block hidden' />
@@ -77,7 +91,7 @@ const MainMobileNav = ({searchTerm, setSearchTerm, setSearchResult}) => {
             <path fill="#513535" d="m8.962 18.91l.464-.588zM12 5.5l-.54.52a.75.75 0 0 0 1.08 0zm3.038 13.41l.465.59zm-5.612-.588C7.91 17.127 6.253 15.96 4.938 14.48C3.65 13.028 2.75 11.335 2.75 9.137h-1.5c0 2.666 1.11 4.7 2.567 6.339c1.43 1.61 3.254 2.9 4.68 4.024zM2.75 9.137c0-2.15 1.215-3.954 2.874-4.713c1.612-.737 3.778-.541 5.836 1.597l1.08-1.04C10.1 2.444 7.264 2.025 5 3.06C2.786 4.073 1.25 6.425 1.25 9.137zM8.497 19.5c.513.404 1.063.834 1.62 1.16s1.193.59 1.883.59v-1.5c-.31 0-.674-.12-1.126-.385c-.453-.264-.922-.628-1.448-1.043zm7.006 0c1.426-1.125 3.25-2.413 4.68-4.024c1.457-1.64 2.567-3.673 2.567-6.339h-1.5c0 2.198-.9 3.891-2.188 5.343c-1.315 1.48-2.972 2.647-4.488 3.842zM22.75 9.137c0-2.712-1.535-5.064-3.75-6.077c-2.264-1.035-5.098-.616-7.54 1.92l1.08 1.04c2.058-2.137 4.224-2.333 5.836-1.596c1.659.759 2.874 2.562 2.874 4.713zm-8.176 9.185c-.526.415-.995.779-1.448 1.043s-.816.385-1.126.385v1.5c.69 0 1.326-.265 1.883-.59c.558-.326 1.107-.756 1.62-1.16z" /></svg>
           <svg className='cursor-pointer' xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path fill="none" stroke="#513535" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20.75a1 1 0 0 0 1-1v-1.246c.004-2.806-3.974-5.004-8-5.004s-8 2.198-8 5.004v1.246a1 1 0 0 0 1 1zM15.604 6.854a3.604 3.604 0 1 1-7.208 0a3.604 3.604 0 0 1 7.208 0" /></svg> */}
-          <img onClick={()=>navigate("/MyAccount")} src={profileData.image_url} className='w-12 h-12 rounded-full object-cover cursor-pointer' />
+          <img onClick={() => navigate("/MyAccount")} src={profileData.image_url} className='w-12 h-12 rounded-full object-cover cursor-pointer' />
         </div>
       </div>
 
@@ -95,10 +109,10 @@ const MainMobileNav = ({searchTerm, setSearchTerm, setSearchResult}) => {
         <button onClick={() => navigate("/MyAccount", { state: { message: "whishlist" } })} type="button" class="text-white bg-[#D2B48C] hover:bg-[#84675e]  font-medium rounded-[5px]  px-1 py-1 w-[40px] h-[40px] md:hidden">
           {/* <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="26px" viewBox="0 0 24 24"><path fill="none" stroke="#f0f0f0" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1.5" d="M21.25 12H8.895m-4.361 0H2.75m18.5 6.607h-5.748m-4.361 0H2.75m18.5-13.214h-3.105m-4.361 0H2.75m13.214 2.18a2.18 2.18 0 1 0 0-4.36a2.18 2.18 0 0 0 0 4.36Zm-9.25 6.607a2.18 2.18 0 1 0 0-4.36a2.18 2.18 0 0 0 0 4.36Zm6.607 6.608a2.18 2.18 0 1 0 0-4.361a2.18 2.18 0 0 0 0 4.36Z" /></svg> */}
           {/* <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="26px" viewBox="0 0 24 24"><path fill="#f0f0f0" d="m8.962 18.91l.464-.588zM12 5.5l-.54.52a.75.75 0 0 0 1.08 0zm3.038 13.41l.465.59zm-5.612-.588C7.91 17.127 6.253 15.96 4.938 14.48C3.65 13.028 2.75 11.335 2.75 9.137h-1.5c0 2.666 1.11 4.7 2.567 6.339c1.43 1.61 3.254 2.9 4.68 4.024zM2.75 9.137c0-2.15 1.215-3.954 2.874-4.713c1.612-.737 3.778-.541 5.836 1.597l1.08-1.04C10.1 2.444 7.264 2.025 5 3.06C2.786 4.073 1.25 6.425 1.25 9.137zM8.497 19.5c.513.404 1.063.834 1.62 1.16s1.193.59 1.883.59v-1.5c-.31 0-.674-.12-1.126-.385c-.453-.264-.922-.628-1.448-1.043zm7.006 0c1.426-1.125 3.25-2.413 4.68-4.024c1.457-1.64 2.567-3.673 2.567-6.339h-1.5c0 2.198-.9 3.891-2.188 5.343c-1.315 1.48-2.972 2.647-4.488 3.842zM22.75 9.137c0-2.712-1.535-5.064-3.75-6.077c-2.264-1.035-5.098-.616-7.54 1.92l1.08 1.04c2.058-2.137 4.224-2.333 5.836-1.596c1.659.759 2.874 2.562 2.874 4.713zm-8.176 9.185c-.526.415-.995.779-1.448 1.043s-.816.385-1.126.385v1.5c.69 0 1.326-.265 1.883-.59c.558-.326 1.107-.756 1.62-1.16z"/></svg> */}
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="26" viewBox="0 0 24 24"><g fill="none"><path fill="#fff" fill-opacity="0.7" d="M16.696 3C14.652 3 12.887 4.197 12 5.943C11.113 4.197 9.348 3 7.304 3C4.374 3 2 5.457 2 8.481s1.817 5.796 4.165 8.073S12 21 12 21s3.374-2.133 5.835-4.446C20.46 14.088 22 11.514 22 8.481S19.626 3 16.696 3"/><path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16.696 3C14.652 3 12.887 4.197 12 5.943C11.113 4.197 9.348 3 7.304 3C4.374 3 2 5.457 2 8.481s1.817 5.796 4.165 8.073S12 21 12 21s3.374-2.133 5.835-4.446C20.46 14.088 22 11.514 22 8.481S19.626 3 16.696 3"/></g></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="26" viewBox="0 0 24 24"><g fill="none"><path fill="#fff" fill-opacity="0.7" d="M16.696 3C14.652 3 12.887 4.197 12 5.943C11.113 4.197 9.348 3 7.304 3C4.374 3 2 5.457 2 8.481s1.817 5.796 4.165 8.073S12 21 12 21s3.374-2.133 5.835-4.446C20.46 14.088 22 11.514 22 8.481S19.626 3 16.696 3" /><path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16.696 3C14.652 3 12.887 4.197 12 5.943C11.113 4.197 9.348 3 7.304 3C4.374 3 2 5.457 2 8.481s1.817 5.796 4.165 8.073S12 21 12 21s3.374-2.133 5.835-4.446C20.46 14.088 22 11.514 22 8.481S19.626 3 16.696 3" /></g></svg>
         </button>
       </div>
-      {showSearchLayout && <SearchLayout searchData={seachData} searchStatus={searchChange} mobailNavClosing={() => setShowSearchLayout(false)} />}
+      {showSearchLayout && <SearchLayout searchData={navSearchResult} searchStatus={searchChange} mobailNavClosing={() => setShowSearchLayout(false)} />}
       <SideNav
         isOpen={isSideNavOpen}
         onClose={() => setIsSideNavOpen(false)}

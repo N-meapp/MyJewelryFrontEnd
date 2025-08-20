@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
+import './ar.css'
 
-const VirtualTryOn = ({setModalTryitOnOpen}) => {
+const VirtualTryOn = ({ setModalTryitOnOpen }) => {
   const [showScene, setShowScene] = useState(true);
 
   const stopCamera = () => {
@@ -10,21 +11,20 @@ const VirtualTryOn = ({setModalTryitOnOpen}) => {
       video.srcObject.getTracks().forEach((track) => track.stop());
       video.srcObject = null;
     }
-  
     // Remove the a-scene completely
     const scene = document.querySelector("a-scene");
     if (scene) {
       scene.parentNode.removeChild(scene);
     }
-  
+
     // Call the function passed from the parent
     if (setModalTryitOnOpen) {
       setModalTryitOnOpen();
     }
-  
+
     setShowScene(false);
   };
-  
+
 
   useEffect(() => {
     if (!showScene) return;
@@ -72,20 +72,44 @@ const VirtualTryOn = ({setModalTryitOnOpen}) => {
     setTimeout(handleScript, 1000); // Wait for scene to be initialized
   }, [showScene]);
 
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     const aframeCanvas = document.querySelector("canvas.a-canvas");
+  //     if (aframeCanvas) {
+  //       aframeCanvas.style.zIndex = "9999";
+  //       aframeCanvas.style.position = "fixed";
+  //       aframeCanvas.style.top = "0";
+  //       aframeCanvas.style.left = "0";
+  //       aframeCanvas.style.width = "100%";
+  //       aframeCanvas.style.height = "100%";
+  //       clearInterval(interval);
+  //     }
+  //   }, 1000);
+  // }, [showScene]);
+
   useEffect(() => {
     const interval = setInterval(() => {
       const aframeCanvas = document.querySelector("canvas.a-canvas");
       if (aframeCanvas) {
         aframeCanvas.style.zIndex = "9999";
-        aframeCanvas.style.position = "fixed";
         aframeCanvas.style.top = "0";
         aframeCanvas.style.left = "0";
         aframeCanvas.style.width = "100%";
         aframeCanvas.style.height = "100%";
+
+        // Apply fixed position only on desktop
+        if (window.innerWidth > 768) {
+          aframeCanvas.style.position = "fixed";
+        } else {
+          aframeCanvas.style.position = "absolute"; // or just remove if you prefer
+        }
+
         clearInterval(interval);
       }
     }, 1000);
   }, [showScene]);
+
+
 
   return (
     <>
@@ -138,7 +162,7 @@ const VirtualTryOn = ({setModalTryitOnOpen}) => {
 
       {showScene && (
         <div className="example-container">
-          <button className="close-button" onClick={stopCamera } >
+          <button className="close-button" onClick={stopCamera} >
             Close
           </button>
 
@@ -168,15 +192,15 @@ const VirtualTryOn = ({setModalTryitOnOpen}) => {
               <a-asset-item id="hatModel2" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/hat2/scene.gltf" />
               <a-asset-item id="earringModel" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/face-tracking/assets/earring/scene.gltf" />
               <a-entity mindar-face-target="anchorIndex: 356">
-            <a-gltf-model
-              src="#earringModel"
-              class="earring-entity"
-              visible="false"
-              position="0 -0.3 -0.3"
-              rotation="0.1 0 0"
-              scale="0.05 0.05 0.05"
-            />
-          </a-entity>              <a-asset-item id="necklaceModel" src="/assets/Images/3DAR/necklace_b.glb" />
+                <a-gltf-model
+                  src="#earringModel"
+                  class="earring-entity"
+                  visible="false"
+                  position="0 -0.3 -0.3"
+                  rotation="0.1 0 0"
+                  scale="0.05 0.05 0.05"
+                />
+              </a-entity>              <a-asset-item id="necklaceModel" src="/assets/Images/3DAR/necklace_b.glb" />
             </a-assets>
 
             <a-camera active="false" position="0 0 0"></a-camera>
@@ -196,15 +220,15 @@ const VirtualTryOn = ({setModalTryitOnOpen}) => {
               <a-gltf-model src="#glassesModel" class="glasses1-entity" visible="false" position="0 0 0" scale="0.01 0.01 0.01" />
             </a-entity>
             <a-entity mindar-face-target="anchorIndex: 168">
-            <a-gltf-model
-              src="#glassesModel2"
-              class="glasses2-entity"
-              visible="false"
-              position="0 -0.3 0"
-              rotation="0 -90 0"
-              scale="0.6 0.6 0.6"
-            />
-          </a-entity>
+              <a-gltf-model
+                src="#glassesModel2"
+                class="glasses2-entity"
+                visible="false"
+                position="0 -0.3 0"
+                rotation="0 -90 0"
+                scale="0.6 0.6 0.6"
+              />
+            </a-entity>
             <a-entity mindar-face-target="anchorIndex: 127">
               <a-gltf-model src="#earringModel" class="earring-entity" visible="false" position="0 -0.3 -0.3" scale="0.05 0.05 0.05" />
             </a-entity>

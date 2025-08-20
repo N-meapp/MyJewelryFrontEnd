@@ -1,4 +1,4 @@
-body {
+/* body {
     margin: 0;
   }
   .example-container {
@@ -22,4 +22,8 @@ cursor: pointer;
   }
   .options-panel img.selected {
 border-color: green;
+  } */
+
+  video{
+    max-width: none;
   }

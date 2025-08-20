@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom';
 import { ProductContext } from "./ProductContext.js";
 import goldGif from '../../../public/assets/Images/ProductDetails/gold.gif'
 import diamondGif from '../../../public/assets/Images/ProductDetails/diamond.gif'
+import enqu from '../../../public/assets/Images/ProductDetails/w1.png'
 
 const DetailHeader = () => {
     const location = useLocation()
@@ -199,7 +200,7 @@ const DetailHeader = () => {
                                     </div>
                                     <div>
                                         <button onClick={() => sentToEnquery(productData.id)} type="button" class="text-white flex  md:gap-2 gap-2  bg-[#56433D] hover:bg-[#795f57] poppins font-medium md:rounded-lg rounded-[10px] text-[14px]  md:px-24 px-[60px] py-2.5 md:py-2.5 md:me-2 mb-2">
-                                            <img className='md:w-[20px] md:h-[20px] w-[15px] h-[15px] md:mt-0 mt-1' src='/public/assets/Images/ProductDetails/w1.png' />
+                                            <img className='md:w-[20px] md:h-[20px] w-[15px] h-[15px] md:mt-0 mt-1' src={enqu} />
                                             Enquire
                                         </button>
                                     </div>
@@ -283,7 +284,6 @@ const DetailHeader = () => {
                 content={(
                     <div>
                         <VirtualTryOn setModalTryitOnOpen={() => setModalTryitOnOpen(false)} />
-
                     </div>
                 )}
             />

@@ -105,7 +105,7 @@ const Navbar = ({ hideSearch = false, mobailView, searchTerm, setSearchTerm, set
               <div className='bg-gray-50 border  border-[#AF9F9F] px-6 py-[2px] rounded-[21px] '>
                 <input
                   autoComplete='off'
-                  onClick={searchClickHandle }
+                  onClick={searchClickHandle}
                   value={searchTerm}
                   onChange={handleSearch}
                   type="text" id="simple-search" className="bg-gray-50  text-gray-900 text-sm rounded-[19px] w-full ps-10 p-2.5

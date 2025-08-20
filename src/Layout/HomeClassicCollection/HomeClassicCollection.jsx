@@ -55,7 +55,7 @@ const HomeClassicCollection = () => {
               onClick={() =>
                 navigate(`/ProductDetailPage`, { state: { id: item.id } })
               }
-              className={`md:w-1/5 max-w-[50%] px-1 md:px-1 mb-4 md:mb-0 cursor-pointer ${index === 2 ? 'flex items-center md:mt-0 mt-[-115px]' : ''
+              className={`w-2/5 md:w-1/5 max-w-[50%] px-1 md:px-1 mb-4 md:mb-0 cursor-pointer ${index === 2 ? 'flex items-center md:mt-0 mt-[-115px]' : ''
                 }`}
             >
               <div className="w-full">

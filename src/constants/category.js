@@ -94,7 +94,7 @@ export const navCategory = [
           { id: 4, label: 'Traditional wear', icon: '/public/assets/Images/subcategory/occasions/o4.png' },
         ],
         Price: [
-          { id: 1, label: '<25K', icon: '/public/assets/Images/subcategory/rate/r1.png' },
+          { id: 1, label: '<25Kkkk', icon: '/public/assets/Images/subcategory/rate/r1.png' },
           { id: 2, label: '25K - 50K', icon: '/public/assets/Images/subcategory/rate/r2.png' },
           { id: 3, label: '50K - 1L', icon: '/public/assets/Images/subcategory/rate/r3.png' },
           { id: 4, label: '1L & Above', icon: '/public/assets/Images/subcategory/rate/r4.png' },

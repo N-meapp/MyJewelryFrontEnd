@@ -48,18 +48,17 @@ const ProfileView = () => {
 
     return (
         <>
-
             <div className=' relative cursor-pointer'>
                 <img className='rounded-full object-cover w-[206px] h-[206px]' src={profileData.image_url} />
                 <span onClick={() => setModalOpen(true)} className='rounded-full w-[33px] h-[33px] bg-[#fff] shadow-md absolute right-[18px] bottom-3 flex justify-center items-center'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24"><path fill="#56433d" d="M18.58 2.944a2 2 0 0 0-2.828 0L14.107 4.59l5.303 5.303l1.645-1.644a2 2 0 0 0 0-2.829zm-.584 8.363l-5.303-5.303l-8.835 8.835l-1.076 6.38l6.38-1.077z" /></svg>
                 </span>
             </div>
-            <p className='text-[24px] text-[#000] poppins font-[600] mt-3'>Name : {user?.user}</p>
+            <p className='text-[20px] md:text-[24px] text-[#000] poppins font-[600] mt-3'>Name : {user?.user}</p>
             <p className='text-[15px] text-[#000] poppins'>Ms</p>
 
             <div className='flex gap-1'>
-                <img className='w-[20px] h-[20px]' src={flag} />
+                <img className='w-[20px] h-[20px]' src={flag}/>
                 <p className='text-[15px] poppins'>India</p>
             </div>
 

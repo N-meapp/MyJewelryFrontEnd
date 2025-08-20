@@ -65,7 +65,7 @@ const MyAccount = () => {
                         </div>
 
                         <nav className="flex-1 mx-8 items-center  ">
-                            <ul className="md:space-y-4 flex md:block md:text-[16px] text-[14px] overflow-x-auto md:overflow-visible pb-2 gap-7 md:gap-0 whitespace-nowrap no-scrollbar">
+                            <ul className="md:space-y-4 flex md:block md:text-[16px] mb-[-35px] text-[14px] overflow-x-auto md:overflow-visible pb-2 gap-7 md:gap-0 whitespace-nowrap no-scrollbar">
                                 <li
                                     onClick={() => setActiveTab("overview")}
                                     className={`flex items-center flex-col justify-center cursor-pointer gap-4 md:hover:bg-[#896a61] md:hover:text-[#ffffff] transition ease-in-out duration-300 p-2 rounded-xl poppins relative group ${activeTab === "overview"
