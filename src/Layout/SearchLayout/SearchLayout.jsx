@@ -18,7 +18,7 @@ const SearchLayout = ({ searchData, searchStatus, mobailNavClosing }) => {
     console.log(data, "rrrrrrrrrrrrrrrrr");
 
     return (
-        <div className="absolute lg:h-screen mt-1 lg:mt-[0px] h-[100vh] w-[100%] lg:w-screen left-[-0%] lg:left-[-450px] z-10 overflow-hidden  scroll-hidden">
+        <div className="absolute lg:h-screen mt-1 lg:mt-[0px] h-[100vh] w-[100%] lg:w-screen left-[-0%] lg:left-[-450px] z-40 overflow-hidden  scroll-hidden">
 
             <div className="absolute inset-0  backdrop-blur-lg z-0 pointer-events-none " ></div>
             <button onClick={mobailNavClosing} className='block lg:hidden absolute z-50  top-[-1px]'>
