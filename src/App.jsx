@@ -25,7 +25,6 @@ export default function App() {
           <Routes>
             {token ?
               <>
-               
                 <Route path="/" element={<Home />} />
                 <Route path="*" element={<Home />} />
                 <Route path="/categories" element={<Categories />} />
