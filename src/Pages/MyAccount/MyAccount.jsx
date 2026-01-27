@@ -5,7 +5,7 @@ import Overview from "../../Layout/MyAccount/Overview";
 import Wishlist from "../../Layout/MyAccount/WishList";
 import DetailsNavbar from "../../Layout/ProductDetail/DetailsNavbar";
 import PersonalDetails from "../../Layout/MyAccount/PersonalDetails";
-import { AccountMobileView } from "../../Layout/Navbar/subMobileNav";
+import { AccountMobileView } from "../../Layout/Navbar/SubMobileNav";
 import { useLocation } from "react-router-dom";
 import Modal from "../../Components/Modal/Modal";
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
