@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../../Layout/Navbar/Navbar";
 import Footer from "../../Layout/Footer/Footer";
 import Overview from "../../Layout/MyAccount/Overview";
-import Wishlist from "../../Layout/MyAccount/Wishlist";
+import Wishlist from "../../Layout/MyAccount/WishList";
 import DetailsNavbar from "../../Layout/ProductDetail/DetailsNavbar";
 import PersonalDetails from "../../Layout/MyAccount/PersonalDetails";
 import { AccountMobileView } from "../../Layout/Navbar/subMobileNav";
@@ -29,7 +29,7 @@ const MyAccount = () => {
         dispatch({ type: "LOGOUT" }); // Clears both user and admin
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
-        console.log("Logged out successfully!");
+        console.log("Logged out successfully!!");
         navigate('/login')
         // showToast("error", "Logout Successfully!");
 
