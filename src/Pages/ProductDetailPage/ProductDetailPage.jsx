@@ -17,7 +17,7 @@ const ProductDetailPage = () => {
 
     const [detailProductData, setDetailProductData] = useState(null);
 
-    console.log(detailProductData,"llllllllllllllllllllllllll");
+    console.log(detailProductData,"lllllllll");
     
 
   return (
