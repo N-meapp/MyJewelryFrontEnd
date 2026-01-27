@@ -40,7 +40,23 @@ const LoginLayout = () => {
     };
 
 
-  
+    // const handleLoginSuccess = async (response) => {
+    //     const access_token = response.credential;
+
+    //     try {
+    //         const res = await axios.post('https://nme360.com/api/dj-rest-auth/google/', {
+    //             access_token,
+    //         });
+
+    //         console.log('Login success:', res.data);
+
+    //         // Save tokens
+    //         localStorage.setItem('access_token', res.data.access);
+    //         localStorage.setItem('refresh_token', res.data.refresh);
+    //     } catch (err) {
+    //         console.error('Backend login error:', err.response?.data || err.message);
+    //     }
+    // };
 
 
     const login = useGoogleLogin({
@@ -89,6 +105,8 @@ const LoginLayout = () => {
                                 className="absolute left-5 md:left-5 top-[43px] transform -translate-y-1/2 w-[24px] h-[24px]"
                             />
                         </div>
+
+
 
                         <div className="relative w-full max-w-[340px] gap-8 mx-auto md:mx-0 md:ml-[100px]">
                             <input

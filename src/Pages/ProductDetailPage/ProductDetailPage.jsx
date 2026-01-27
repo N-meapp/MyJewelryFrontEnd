@@ -6,7 +6,7 @@ import ProductDetails from '../../Layout/ProductDetail/ProductDetails'
 import PriceBreakup from '../../Layout/ProductDetail/PriceBreakup'
 import JewelryTryOn from '../../Components/AR3DModel/VirtualTryOn'
 import Navbar from '../../Layout/Navbar/Navbar'
-import SubMobileNav from '../../Layout/Navbar/subMobileNav'
+import SubMobileNav from '../../Layout/Navbar/SubMobileNav'
 
 import { ProductContext } from "../../Layout/ProductDetail/ProductContext.js"
 
