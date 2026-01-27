@@ -29,7 +29,7 @@ const MyAccount = () => {
         dispatch({ type: "LOGOUT" }); // Clears both user and admin
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
-        console.log("Logged out successfully!!");
+        console.log("Logged out successfully!!!");
         navigate('/login')
         // showToast("error", "Logout Successfully!");
 
